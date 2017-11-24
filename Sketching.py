@@ -1,7 +1,6 @@
 import Tkinter as tk
 import random
 hey=tk.Tk()
-#DONT LOOK BELOW PLZ
 culurs=["green", "blue", "red", "black", "brown", "coral", "cyan", "chocolate", "DarkOrchid", "cornsilk2", "khaki", "honeydew1", "HotPink"]
 global canvaswidth
 global canvasheight
@@ -110,18 +109,18 @@ def paint( event ):
     if type == "trianglecomputerpuke":
         believe=0
         while (believe <= 100):
-            x1, y1 = (event.x - believe), (event.y - believe)
+            x1, y1 = (event.x - believe), (event.y - believe) #http://www.codeskulptor.org/#user14_MxIPA78aRmnIJU3.py
             x2, y2 = (event.x + believe), (event.y + believe)
             lineitem = canvas.create_line(x1, y1 - ball_radius,
                                           x2, y1 + ball_radius,
                                           fill=random.choice(culurs), width=1, )
             believe=believe+1
-    if type == "paint":
+  if type == "paint":
             x1, y1 = (event.x -ball_radius), (event.y -ball_radius)
             x2, y2 = (event.x +ball_radius), (event.y +ball_radius)
             paintitem= canvas.create_oval(x1, y1,
                                     x2, y2,
-                                    fill="Blue",  width=0,)
+                                    fill=random.choice(culurs),  width=0,)
 
 #othershapes
 coolsquare.bind ("<Button-1>", click)
@@ -139,15 +138,19 @@ def settings():
     global input1
     global input2
     input1=input("what size of shape?")
-    if input1>="1" and input1<="50":
+    if input1>="1" and input1<="100":
         ball_radius=int(input1)
     input1= input("How many colors do you want?")
     if input1 >=1 and input1<=20:
-        culurs.pop()
+        del culurs[:]
+        print(len(culurs))
         while len(culurs) < input1:
-            input2=input("What colors?")
-            culurs.append(str(input2))
-        #
+            input2 = raw_input("What colors?")
+            culurs.append(input2)
+            print culurs
+    tie=raw_input("Do you like these colors?")
+    if tie=="no":
+        print("Oh. Here are some possible color ideas: chocolate, pink, red, orange, aliceblue, bisque, crimson, cyan, darkblue, darkmagenta, darkorchid, olivegreen, gold, goldenrod, floralwhite, and more")
     input1=input ("what width of canvas?")
     if input1>="100" and input1<="1000":
         canvaswidth=int(input1)
@@ -156,7 +159,7 @@ def settings():
         canvasheight=int(input1)
         canvas = tk.Canvas (hey, bg=random.choice (culurs), height=canvasheight, width=100)
         canvas.grid (rowspan=1, columnspan=10)
-
+    print("Please do not answer the following questions.")
 settings = tk.Button (hey, text="Advanced Settings", command=settings, )
 settings.grid (row=2, column=2)
 quit = settings = tk.Button (hey, text="Quit", command=hey.destroy, )
@@ -164,4 +167,3 @@ quit.grid (row=2, column=3)
 
 
 hey.mainloop()
-#http://www.codeskulptor.org/#user14_MxIPA78aRmnIJU3.py
