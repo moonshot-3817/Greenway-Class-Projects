@@ -30,6 +30,8 @@ circle=tk.Button(hey, text="cirlce", command=switchroles2,)
 circle.grid(row=1, column =5)
 coolsquare=tk.Button(hey, text="coolsquare", command=switchroles3,)
 coolsquare.grid(row=1, column =3)
+square=tk.Button(hey, text="square", command=switchroles5,)
+square.grid(row=1, column =7)
 triangle=tk.Button(hey, text="triangle", command=switchroles4,)
 triangle.grid(row=1, column =4)
 def click(event):
@@ -55,12 +57,25 @@ def click(event):
         #squareitem = canvas.create_rectangle(#abs(event.x-event.x2), abs(event.y-event.x2),
                                              #abs (event.x - event.x2), abs(event.y-event.x2),
                                              #fill=random.choice(culurs),  width=1,)
+    if type=="square":
+        print("sigh")
+             x1, y1 = ( event.x - 1 ), ( event.y - 1 )
+             x2, y2 = ( event.x + 1 ), ( event.y + 1 )
+            canvas.create_rectangle (event.x, event.y, canvaswidth/2, canvasheight/2, fill=random.choice(culurs))
     if type=="triangle":
         print("what up")
         if len (ball)== 3:
             triangleitem = canvas.create_polygon(event.x-ball_radius, event.y-ball_radius,
                                     event.x+ball_radius, event.y+ball_radius,
                                     fill=random.choice(culurs),  width=1,)
+    def paint( event ):
+        inputcolors=input("What color?")
+        x1, y1 = ( event.x - 1 ), ( event.y - 1 )
+        x2, y2 = ( event.x + 1 ), ( event.y + 1 )
+        canvas.create_oval( x1, y1, x2, y2, fill = inputcolors)
+        canvas.bind( "<B1-Motion>", paint )
+    if type=="paint":
+        paint( event)
 
 #othershapes
 coolsquare.bind ("<Button-1>", click)
@@ -68,6 +83,7 @@ triangle.bind ("<Button-1>", click)
 canvas.bind("<Button-1>", click)
 line.bind ("<Button-1>", click)
 circle.bind ("<Button-1>", click)
+square.bind("<Button-1>", click)
 
 def settings():
     global input1
