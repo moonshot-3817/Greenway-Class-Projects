@@ -45,8 +45,12 @@ def double():
         newcard = 10
     if newvar == "ace":
         newcard = 11
+    print("Your new card is")
     print(newvar)
+    print(" ")
+    print("Your total is")
     playval = playval + newcard
+    print(playval)
     if playval < 22:
         stand()
     else:
