@@ -431,5 +431,18 @@ def start():
         gamestart()
     else:
         print("Goodbye")
+def gameover():
+    print("You have no more chips. bye")
 
+
+stewie = tk.Tk ()
+stewie.title("MythicalJay's")
+stewie.minsize(1500, 1000)
+stand=tk.Button(stewie, text="stand", command=stand, bg="hotpink")
+stand.grid(row=5, column=8,)
+hit=tk.Button(stewie, text="hit", command=hit, bg="lightblue")
+hit.grid(row=5, column=7,)
+double=tk.Button(stewie, text="double", command=double, bg="red")
+double.grid(row=5, column=6,)
 start()
+stewie.mainloop ()
