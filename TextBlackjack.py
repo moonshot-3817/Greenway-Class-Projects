@@ -1,4 +1,5 @@
 from random import *
+import tkinter as tk
 
 dealval = 0
 playval = 0
