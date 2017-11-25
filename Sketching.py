@@ -1,4 +1,4 @@
-import Tkinter as tk
+import tkinter as tk
 import random
 hey=tk.Tk()
 culurs=["green", "blue", "red", "black", "brown", "coral", "cyan", "chocolate", "DarkOrchid", "cornsilk2", "khaki", "honeydew1", "HotPink"]
@@ -115,7 +115,7 @@ def paint( event ):
                                           x2, y1 + ball_radius,
                                           fill=random.choice(culurs), width=1, )
             believe=believe+1
-  if type == "paint":
+    if type == "paint":
             x1, y1 = (event.x -ball_radius), (event.y -ball_radius)
             x2, y2 = (event.x +ball_radius), (event.y +ball_radius)
             paintitem= canvas.create_oval(x1, y1,
@@ -147,7 +147,7 @@ def settings():
         while len(culurs) < input1:
             input2 = raw_input("What colors?")
             culurs.append(input2)
-            print culurs
+            print(culurs)
     tie=raw_input("Do you like these colors?")
     if tie=="no":
         print("Oh. Here are some possible color ideas: chocolate, pink, red, orange, aliceblue, bisque, crimson, cyan, darkblue, darkmagenta, darkorchid, olivegreen, gold, goldenrod, floralwhite, and more")
