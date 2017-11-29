@@ -1,3 +1,4 @@
+
 import random
 import pygame, sys
 from pygame.locals import *
@@ -55,3 +56,36 @@ for AmberSweater in AMBERGETCREDITNOWQUESTION:
              b['dir'] = Amber_right
      if AmberSweater['rect'].right > 1000:
                 b['dir'] = Amber_left
+up = (0, -Amber_movespeed)
+down= (0, Amber_movespeed)
+left= (-Amber_movespeed, 0)
+right= (Amber_movespeed, 0)
+
+candyR():
+    Position_AmberX = right
+
+
+
+# game loop
+
+
+Amber_running = True
+
+hey = start()
+
+while Amber_running:
+
+    for event in pygame.event.get():
+
+        if event.type == QUIT:
+            Amber_running = False
+
+        if event.type== pygame.KEYDOWN:
+            Position_AmberX = down
+        if event.type== pygame.KEYUP:
+            Position_AmberX = up
+        if event.type== pygame.KEYRIGHT:
+            candyR(event)
+        if event.type== pygame.KEYLEFT:
+            CandyL(event)
+            Position_AmberX = left
