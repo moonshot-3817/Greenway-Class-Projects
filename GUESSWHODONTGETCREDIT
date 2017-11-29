@@ -1,0 +1,40 @@
+import random
+import pygame, sys
+from pygame.locals import *
+pygame.init ()
+
+lookitsamber=pygame.display.set_mode((1000, 1000), 0, 32)
+pygame.display.set_caption("Pong")
+mouse = pygame.mouse
+fps = pygame.time.Clock ()
+
+# colors
+Amber = (250, 245, 255)
+Is = (255, 0, 0)
+Awesome = (0, 255, 0)
+NoLight = (0, 0, 0)
+Circle_Amber_radius=80
+Position_Amber=[50,50]
+
+Amberhasskillz=80
+AmberpaddleH=90
+Thick=80
+AmberpaddleW=Thick
+def start():
+    lookitsamber.fill(NoLight)
+    pygame.draw.line(lookitsamber, Awesome, [1000 / 2, 0],[1000 / 2, 1000], 1)
+    pygame.draw.line(lookitsamber, Awesome, [AmberpaddleW, 0],[AmberpaddleW, 1000], 1)
+    pygame.draw.line(lookitsamber, Awesome, [1000-AmberpaddleW, 0],[1000 - AmberpaddleW, 1000], 1)
+    pygame.draw.rect(lookitsamber, Awesome,  [300, 1000 / 2, 400, 100],3)
+    pygame.draw.circle(lookitsamber, Amber, Position_Amber, Circle_Amber_radius,)
+# game loop
+
+running=True
+hey=start()
+while running:
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            running = False
+
+    pygame.display.update()
+    fps.tick (60)
