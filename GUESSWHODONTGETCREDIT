@@ -15,6 +15,10 @@ Awesome = (0, 255, 0)
 NoLight = (0, 0, 0)
 Circle_Amber_radius=80
 Position_Amber=[50,50]
+Amber_movespeed=4
+
+Amber_left=4
+Amber_right=6
 
 Amberhasskillz=80
 AmberpaddleH=90
@@ -29,12 +33,25 @@ def start():
     pygame.draw.circle(lookitsamber, Amber, Position_Amber, Circle_Amber_radius,)
 # game loop
 
-running=True
+Amber_running=True
 hey=start()
-while running:
+while Amber_running:
     for event in pygame.event.get():
         if event.type == QUIT:
-            running = False
+            Amber_running = False
 
     pygame.display.update()
     fps.tick (60)
+    
+    '''''
+    AmberSweater = {'rect':pygame.Rect(240, 700, 20, 20), 'color':(250, 30, 200), 'dir':Amber_left}
+    AMBERGETCREDITNOWQUESTION = [AmberSweater]
+for AmberSweater in AMBERGETCREDITNOWQUESTION:
+    if AmberSweater['dir']==Amber_left
+        AmberSweater['rect'].left -=Amber_movespeed
+    if AmberSweater['dir']==Amber_right
+        AmberSweater['rect'].left +=Amber_movespeed
+     if AmberSweater['rect'].left < 0:
+             b['dir'] = Amber_right
+     if AmberSweater['rect'].right > 1000:
+                b['dir'] = Amber_left
