@@ -101,27 +101,29 @@ def puppies():
     global playerpoint
     global robotballx
     global robotbally
+    global space
+    if space ==0:
+        while robotballx < 1000:
+            robotballx += 1
+            AmberTrademarktoomuch ()
+        if robotballx >= 1000:
+            robotballx = 500
+            playerpoint = +1
+        if robotballx <= 0:
+            robotballx = 500
+            computerpoint = +1
+        if playerpoint == 10:
+            endgame ()
+        if computerpoint == 10:
+            endgame ()
+        AmberTrademarktoomuch ()
+
     '''''''''
     robotballx += (ball_vel[0])
     robotballx += (ball_vel[1])
     robotbally +=(ball_vel[0])
     robotbally +=(ball_vel[1])
     '''''
-    while robotballx<1000:
-        robotballx+=1
-        AmberTrademarktoomuch ()
-    if robotballx >= 1000:
-        robotballx=500
-        playerpoint=+1
-    if robotballx<=0:
-        robotballx=500
-        print("Ineedanap")
-        computerpoint=+1
-    if playerpoint == 10:
-        endgame ()
-    if computerpoint == 10:
-        endgame ()
-    AmberTrademarktoomuch()
 def start():
     lookitsamber.fill(NoLight)
     pygame.draw.line(lookitsamber, Awesome, [1000 / 2, 0],[1000 / 2, 1000], 1)
@@ -132,7 +134,14 @@ def start():
     AmberTrademarktoomuch ()
     puppies()
 
-
+def goodmorning():
+    global space
+    pressed = pygame.key.get_pressed ()
+    if pressed[pygame.K_SPACE]:
+        if space==0:
+            space=1
+        elif space == 1:
+            space = 0
 
 ''''''''''
     K_UP
@@ -155,3 +164,4 @@ while running:
     fps.tick (60)
     hey = start ()
     joker = puppies ()
+    lol=goodmorning()
