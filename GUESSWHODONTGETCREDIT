@@ -1,4 +1,3 @@
-
 import random
 import pygame, sys
 from pygame.locals import *
@@ -9,83 +8,150 @@ pygame.display.set_caption("Pong")
 mouse = pygame.mouse
 fps = pygame.time.Clock ()
 
+Amber_movespeed=30
+ball_movespeed=3
 # colors
 Amber = (250, 245, 255)
 Is = (255, 0, 0)
 Awesome = (0, 255, 0)
+Code=(100, 200, 200)
 NoLight = (0, 0, 0)
-Circle_Amber_radius=80
-Position_Amber=[50,50]
-Amber_movespeed=4
-
-Amber_left=4
-Amber_right=6
-
+Circle_Amber_radius=8
+Position_AmberX=500
+Position_AmberY=500
 Amberhasskillz=80
 AmberpaddleH=90
 Thick=80
 AmberpaddleW=Thick
+robotballx=500
+robotbally=500
+computerpoint=0
+playerpoint=0
+ball_vel=0
+
+def AmberTrademarktoomuch():
+    global hello
+    hello = pygame.draw.circle (lookitsamber, Code, [Position_AmberX, Position_AmberY], Circle_Amber_radius, 3)
+    undermined= pygame.draw.line (lookitsamber, Amber, [10, Position_AmberY-AmberpaddleH],[10, Position_AmberY+AmberpaddleH], 5)
+    nocredit = pygame.draw.line (lookitsamber, Amber, [990, robotbally-AmberpaddleH], [990, robotbally+AmberpaddleH], 5)
+    memify = pygame.draw.circle (lookitsamber, Amber, [robotballx, robotbally], Circle_Amber_radius)
+
+unknown=0
+unknown2=0
+def bluestripes():
+    global unknown
+    global unknown2
+    global Position_AmberX
+    global Position_AmberY
+    down = unknown
+    up = unknown
+    left = unknown2
+    right = unknown2
+    pressed = pygame.key.get_pressed ()
+    if pressed[pygame.K_DOWN]:
+        print ("down is pressed")
+        if unknown<500:
+            unknown += Amber_movespeed
+        elif unknown>500:
+            unknown= unknown + Amber_movespeed
+        Position_AmberY = down+500
+        if Position_AmberY>=1000:
+            Position_AmberY=500
+        print (Position_AmberY)
+    elif pressed[pygame.K_UP]:
+        print ("up is pressed")
+        if unknown>500:
+            unknown -= Amber_movespeed
+        elif unknown<=500:
+            unknown = unknown - Amber_movespeed
+        Position_AmberY = up+500
+        if Position_AmberY<=0:
+            Position_AmberY=500
+        print (Position_AmberY)
+    elif pressed[pygame.K_RIGHT]:
+        print ("right is pressed")
+        if unknown2<500:
+            unknown2 += Amber_movespeed
+        elif unknown2>=500:
+            unknown2 = unknown2 + Amber_movespeed
+        if Position_AmberX>=1000:
+            Position_AmberX=500
+        Position_AmberX = right+500
+        print (Position_AmberX)
+    elif pressed[pygame.K_LEFT]:
+        print ("left is pressed")
+        if unknown2>500:
+            unknown2 -= Amber_movespeed
+        elif unknown2<=500:
+            unknown2 = unknown2 - Amber_movespeed
+        Position_AmberX = left+500
+        if Position_AmberX>=1000:
+            Position_AmberX=500
+        print (Position_AmberX)
+    else:
+        Position_AmberX=500
+        Position_AmberY=500
+    AmberTrademarktoomuch()
+def endgame():
+    print("gameover")
+    running=False
+
+def puppies():
+    global computerpoint
+    global playerpoint
+    global robotballx
+    global robotbally
+    '''''''''
+    robotballx += (ball_vel[0])
+    robotballx += (ball_vel[1])
+    robotbally +=(ball_vel[0])
+    robotbally +=(ball_vel[1])
+    '''''
+    while robotballx<1000:
+        robotballx+=1
+        AmberTrademarktoomuch ()
+    if robotballx >= 1000:
+        robotballx=500
+        playerpoint=+1
+    if robotballx<=0:
+        robotballx=500
+        print("Ineedanap")
+        computerpoint=+1
+    if playerpoint == 10:
+        endgame ()
+    if computerpoint == 10:
+        endgame ()
+    AmberTrademarktoomuch()
 def start():
     lookitsamber.fill(NoLight)
     pygame.draw.line(lookitsamber, Awesome, [1000 / 2, 0],[1000 / 2, 1000], 1)
     pygame.draw.line(lookitsamber, Awesome, [AmberpaddleW, 0],[AmberpaddleW, 1000], 1)
     pygame.draw.line(lookitsamber, Awesome, [1000-AmberpaddleW, 0],[1000 - AmberpaddleW, 1000], 1)
     pygame.draw.rect(lookitsamber, Awesome,  [300, 1000 / 2, 400, 100],3)
-    pygame.draw.circle(lookitsamber, Amber, Position_Amber, Circle_Amber_radius,)
-# game loop
+    hello = pygame.draw.circle (lookitsamber, Amber, [50, 50], Circle_Amber_radius, )
+    AmberTrademarktoomuch ()
+    puppies()
 
-Amber_running=True
-hey=start()
-while Amber_running:
+
+
+''''''''''
+    K_UP
+    K_DOWN
+    K_RIGHT
+    K_LEFT
+'''''''''
+# game loop
+running=True
+
+while running:
     for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            bluestripes()
+
         if event.type == QUIT:
-            Amber_running = False
+            running = False
 
     pygame.display.update()
     fps.tick (60)
-    
-    '''''
-    AmberSweater = {'rect':pygame.Rect(240, 700, 20, 20), 'color':(250, 30, 200), 'dir':Amber_left}
-    AMBERGETCREDITNOWQUESTION = [AmberSweater]
-for AmberSweater in AMBERGETCREDITNOWQUESTION:
-    if AmberSweater['dir']==Amber_left
-        AmberSweater['rect'].left -=Amber_movespeed
-    if AmberSweater['dir']==Amber_right
-        AmberSweater['rect'].left +=Amber_movespeed
-     if AmberSweater['rect'].left < 0:
-             b['dir'] = Amber_right
-     if AmberSweater['rect'].right > 1000:
-                b['dir'] = Amber_left
-up = (0, -Amber_movespeed)
-down= (0, Amber_movespeed)
-left= (-Amber_movespeed, 0)
-right= (Amber_movespeed, 0)
-
-candyR():
-    Position_AmberX = right
-
-
-
-# game loop
-
-
-Amber_running = True
-
-hey = start()
-
-while Amber_running:
-
-    for event in pygame.event.get():
-
-        if event.type == QUIT:
-            Amber_running = False
-
-        if event.type== pygame.KEYDOWN:
-            Position_AmberX = down
-        if event.type== pygame.KEYUP:
-            Position_AmberX = up
-        if event.type== pygame.KEYRIGHT:
-            candyR(event)
-        if event.type== pygame.KEYLEFT:
-            CandyL(event)
-            Position_AmberX = left
+    hey = start ()
+    joker = puppies ()
