@@ -20,8 +20,8 @@ NoLight = (0, 0, 0)
 Circle_Samy_radius=8
 Position_AndreaX=500
 Position_AndreaY=500
-ExtrapointsX=random.randint(4, 9996)
-ExtrapointsY=random.randint(4, 9996)
+ExtrapointsX=random.randint(4, 996)
+ExtrapointsY=random.randint(4, 996)
 RosapaddleH=90
 Think=80
 RosapaddleW=Think
@@ -41,8 +41,8 @@ def PeopleTrademarktoomuch():
     global hello
     global ExtrapointsX
     global ExtrapointsY
-    ExtrapointsX = random.randint (4, 9996)
-    ExtrapointsY = random.randint (4, 9996)
+    ExtrapointsX = random.randint (4, 996)
+    ExtrapointsY = random.randint (4, 996)
     hello = pygame.draw.circle (lookitsamber, Code, [Position_AndreaX, Position_AndreaY], Circle_Samy_radius, 3)
     undermined= pygame.draw.line (lookitsamber, Ashley, [10, Position_AndreaY-RosapaddleH],[10, Position_AndreaY+RosapaddleH], 5)
     hello = pygame.draw.circle (lookitsamber, Ashley, [ExtrapointsX, ExtrapointsY], Circle_Samy_radius, )
