@@ -1,0 +1,203 @@
+import random
+import pygame, sys
+from pygame.locals import *
+pygame.init ()
+
+lookitsamber=pygame.display.set_mode((1000, 1000), 0, 32)
+pygame.display.set_caption("Pong")
+mouse = pygame.mouse
+fps = pygame.time.Clock ()
+
+
+ball_movespeedx=3
+ball_movespeedy=3
+# colors
+Ashley = (250, 245, 255)
+Is = (255, 0, 0)
+Awesome = (0, 255, 0)
+Code=(100, 200, 200)
+NoLight = (0, 0, 0)
+Circle_Samy_radius=8
+Position_AndreaX=500
+Position_AndreaY=500
+ExtrapointsX=random.randint(4, 9996)
+ExtrapointsY=random.randint(4, 9996)
+RosapaddleH=90
+Think=80
+RosapaddleW=Think
+robotballx=500
+robotbally=500
+robotballx1=500
+robotbally1=500
+running=True
+start1=1
+count=0
+
+computerpoint=0
+playerpoint=0
+space=0
+Amber_movespeed=30
+display_output=[1000, 1000]
+
+
+def PeopleTrademarktoomuch():
+    global hello
+    hello = pygame.draw.circle (lookitsamber, Code, [Position_AndreaX, Position_AndreaY], Circle_Samy_radius, 3)
+    User= pygame.draw.line (lookitsamber, Ashley, [10, Position_AndreaY-RosapaddleH],[10, Position_AndreaY+RosapaddleH], 5)
+    computer = pygame.draw.line (lookitsamber, Ashley, [990, robotbally-RosapaddleH], [990, robotbally+RosapaddleH], 5)
+    memify = pygame.draw.circle (lookitsamber, Ashley, [robotballx, robotbally], Circle_Samy_radius)
+    computerpaddlerange=((robotbally-RosapaddleH), (robotbally+RosapaddleH))
+
+
+unknown=0
+unknown2=0
+def bluestripes():
+    global unknown
+    global unknown2
+    global Position_AndreaX
+    global Position_AndreaY
+    down = unknown
+    up = unknown
+    left = unknown2
+    right = unknown2
+    pressed = pygame.key.get_pressed ()
+    if pressed[pygame.K_DOWN]:
+
+        if unknown<500:
+            unknown += Amber_movespeed
+        elif unknown>500:
+            unknown= unknown + Amber_movespeed
+        Position_AndreaY = down+500
+        if Position_AndreaY>=1000:
+            Position_AndreaY=500
+
+    elif pressed[pygame.K_UP]:
+
+        if unknown>500:
+            unknown -= Amber_movespeed
+        elif unknown<=500:
+            unknown = unknown - Amber_movespeed
+        Position_AndreaY = up+500
+        if Position_AndreaY<=0:
+            Position_AndreaY=500
+    elif pressed[pygame.K_RIGHT]:
+        if unknown2<500:
+            unknown2 += Amber_movespeed
+        elif unknown2>=500:
+            unknown2 = unknown2 + Amber_movespeed
+        if Position_AndreaX>=1000:
+            Position_AndreaX=500
+        Position_AndreaX = right+500
+    elif pressed[pygame.K_LEFT]:
+
+        if unknown2>500:
+            unknown2 -= Amber_movespeed
+        elif unknown2<=500:
+            unknown2 = unknown2 - Amber_movespeed
+        Position_AndreaX = left+500
+        if Position_AndreaX>=1000:
+            Position_AndreaX=500
+    else:
+        Position_AndreaX=500
+        Position_AndreaY=500
+    PeopleTrademarktoomuch()
+def endgame():
+    print("gameover")
+    running=False
+    sys.exit()
+def puppies():
+
+    global computerpoint
+    global playerpoint
+    global robotballx
+    global robotbally
+    global ball_movespeedx
+    global ball_movespeedy
+    '''''''''
+    robotballx += (ball_vel[0])
+    robotballx += (ball_vel[1])
+    robotbally +=(ball_vel[0])
+    robotbally +=(ball_vel[1])
+    '''''
+    global space
+    global start1
+    if space ==0:
+        if robotbally==500 and not robotballx<11 and not robotballx>990 and start1==1:
+            robotballx+=ball_movespeedx
+        else:
+            robotballx+=ball_movespeedx
+            robotbally += ball_movespeedy
+            start1=0
+        if robotballx<= 10 and robotbally>= Position_AndreaY-RosapaddleH and robotbally<= Position_AndreaY+RosapaddleH:
+            ball_movespeedy = ball_movespeedy * -1
+            ball_movespeedx = ball_movespeedx * -1
+            ball_movespeedx = ball_movespeedx+1
+            ball_movespeedy = ball_movespeedy+1
+        if robotbally>=robotbally-RosapaddleH and robotbally<=robotbally+RosapaddleH and robotballx>=990:
+            ball_movespeedy = ball_movespeedy * -1
+            ball_movespeedx = ball_movespeedx * -1
+            ball_movespeedx = ball_movespeedx-1
+            ball_movespeedy = ball_movespeedy-1
+        if robotballx >= 1000-Circle_Samy_radius and robotballx>=1000+Circle_Samy_radius:
+            robotballx = 500
+            robotbally = 500
+            playerpoint = playerpoint+1
+            ball_movespeedy=ball_movespeedy+1
+            ball_movespeedx=ball_movespeedx+1
+        if robotballx <= 0-Circle_Samy_radius and robotballx<=0+Circle_Samy_radius:
+            robotballx = 500
+            robotbally = 500
+            computerpoint = computerpoint+1
+            print(computerpoint)
+            ball_movespeedy=ball_movespeedy+1
+            ball_movespeedx=ball_movespeedx+1
+        if robotbally <= 0:
+            ball_movespeedy=ball_movespeedy*-1
+        if robotbally >= 1000:
+            ball_movespeedy = ball_movespeedy * -1
+        if playerpoint >= 10:
+            endgame ()
+        if computerpoint >= 10:
+            endgame ()
+        PeopleTrademarktoomuch ()
+def start():
+    lookitsamber.fill(NoLight)
+    pygame.draw.line(lookitsamber, Awesome, [1000 / 2, 0],[1000 / 2, 1000], 1)
+    pygame.draw.line(lookitsamber, Awesome, [RosapaddleW, 0],[RosapaddleW, 1000], 1)
+    pygame.draw.line(lookitsamber, Awesome, [1000-RosapaddleW, 0],[1000 - RosapaddleW, 1000], 1)
+    pygame.draw.rect(lookitsamber, Awesome,  [300, 1000 / 2, 400, 100],3)
+
+    PeopleTrademarktoomuch ()
+    puppies()
+
+def goodmorning():
+    global space
+    pressed = pygame.key.get_pressed ()
+    if pressed[pygame.K_SPACE]:
+        if space==0:
+            space=1
+        elif space == 1:
+            space = 0
+
+''''''''''
+    K_UP
+    K_DOWN
+    K_RIGHT
+    K_LEFT
+'''''''''
+# game loop
+
+
+while running==True:
+    for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            bluestripes()
+
+        if event.type == QUIT:
+            running = False
+
+
+    pygame.display.update()
+    fps.tick (60)
+    hey = start ()
+    lol=goodmorning()
