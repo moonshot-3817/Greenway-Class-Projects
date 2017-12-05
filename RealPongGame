@@ -1,6 +1,20 @@
+import tkinter as tk
 import random
 import pygame, sys
 from pygame.locals import *
+
+def hi():
+    grapplinghook.quit()
+grapplinghook=tk.Tk()
+grapplinghook.wm_minsize(600, 600)
+
+grapplinghook.title("Welcome to Ping Pong")
+maybework=tk.Label(grapplinghook, text="Press spacebar to new round", bg="Black", fg="White")
+maybework.pack(expand=True)
+forks=tk.Button(grapplinghook, text="Play", bg="White", fg="Green", command=hi)
+forks.pack(expand=True)
+grapplinghook.mainloop ()
+
 pygame.init ()
 
 lookitsamber=pygame.display.set_mode((1000, 1000), 0, 32)
@@ -11,7 +25,7 @@ fps = pygame.time.Clock ()
 
 ball_movespeedx=3
 ball_movespeedy=3
-# colors
+# colors #special thanks to stackoverflow for helping us with today's program. Children: Tha-anks StackOverflow.
 Ashley = (250, 245, 255)
 Is = (255, 0, 0)
 Awesome = (0, 255, 0)
@@ -29,6 +43,9 @@ robotballx=500
 robotbally=500
 robotballx1=500
 robotbally1=500
+running=True
+start1=1
+count=0
 
 computerpoint=0
 playerpoint=0
@@ -38,17 +55,12 @@ display_output=[1000, 1000]
 
 
 def PeopleTrademarktoomuch():
-  if space==0:
     global hello
-    global ExtrapointsX
-    global ExtrapointsY
-    ExtrapointsX = random.randint (4, 9996)
-    ExtrapointsY = random.randint (4, 9996)
     hello = pygame.draw.circle (lookitsamber, Code, [Position_AndreaX, Position_AndreaY], Circle_Samy_radius, 3)
-    undermined= pygame.draw.line (lookitsamber, Ashley, [10, Position_AndreaY-RosapaddleH],[10, Position_AndreaY+RosapaddleH], 5)
-    hello = pygame.draw.circle (lookitsamber, Ashley, [ExtrapointsX, ExtrapointsY], Circle_Samy_radius, )
-    nocredit = pygame.draw.line (lookitsamber, Ashley, [990, robotbally-RosapaddleH], [990, robotbally+RosapaddleH], 5)
+    User= pygame.draw.line (lookitsamber, Ashley, [10, Position_AndreaY-RosapaddleH],[10, Position_AndreaY+RosapaddleH], 5)
+    computer = pygame.draw.line (lookitsamber, Ashley, [990, robotbally-RosapaddleH], [990, robotbally+RosapaddleH], 5)
     memify = pygame.draw.circle (lookitsamber, Ashley, [robotballx, robotbally], Circle_Samy_radius)
+    computerpaddlerange=((robotbally-RosapaddleH), (robotbally+RosapaddleH))
 
 
 unknown=0
@@ -64,7 +76,7 @@ def bluestripes():
     right = unknown2
     pressed = pygame.key.get_pressed ()
     if pressed[pygame.K_DOWN]:
-        print ("down is pressed")
+
         if unknown<500:
             unknown += Amber_movespeed
         elif unknown>500:
@@ -72,9 +84,9 @@ def bluestripes():
         Position_AndreaY = down+500
         if Position_AndreaY>=1000:
             Position_AndreaY=500
-        print (Position_AndreaY)
+
     elif pressed[pygame.K_UP]:
-        print ("up is pressed")
+
         if unknown>500:
             unknown -= Amber_movespeed
         elif unknown<=500:
@@ -82,9 +94,7 @@ def bluestripes():
         Position_AndreaY = up+500
         if Position_AndreaY<=0:
             Position_AndreaY=500
-        print (Position_AndreaY)
     elif pressed[pygame.K_RIGHT]:
-        print ("right is pressed")
         if unknown2<500:
             unknown2 += Amber_movespeed
         elif unknown2>=500:
@@ -92,9 +102,8 @@ def bluestripes():
         if Position_AndreaX>=1000:
             Position_AndreaX=500
         Position_AndreaX = right+500
-        print (Position_AndreaX)
     elif pressed[pygame.K_LEFT]:
-        print ("left is pressed")
+
         if unknown2>500:
             unknown2 -= Amber_movespeed
         elif unknown2<=500:
@@ -102,7 +111,6 @@ def bluestripes():
         Position_AndreaX = left+500
         if Position_AndreaX>=1000:
             Position_AndreaX=500
-        print (Position_AndreaX)
     else:
         Position_AndreaX=500
         Position_AndreaY=500
@@ -110,7 +118,7 @@ def bluestripes():
 def endgame():
     print("gameover")
     running=False
-
+    sys.exit()
 def puppies():
 
     global computerpoint
@@ -119,37 +127,47 @@ def puppies():
     global robotbally
     global ball_movespeedx
     global ball_movespeedy
-    '''''''''
-    robotballx += (ball_vel[0])
-    robotballx += (ball_vel[1])
-    robotbally +=(ball_vel[0])
-    robotbally +=(ball_vel[1])
-    '''''
     global space
+    global start1
     if space ==0:
-        robotballx+=ball_movespeedx
-        robotbally += ball_movespeedy
-        if robotballx >= 1000:
+        if robotbally==500 and not robotballx<11 and not robotballx>990 and start1==1:
+            robotballx+=ball_movespeedx
+        else:
+            robotballx+=ball_movespeedx
+            robotbally += ball_movespeedy
+            start1=0
+        if robotballx<= 10 and robotbally>= Position_AndreaY-RosapaddleH and robotbally<= Position_AndreaY+RosapaddleH:
+            ball_movespeedy = ball_movespeedy * 1
+            ball_movespeedx = ball_movespeedx * -1
+            ball_movespeedx = ball_movespeedx+1
+            ball_movespeedy = ball_movespeedy+1
+        if robotbally>=robotbally-RosapaddleH and robotbally<=robotbally+RosapaddleH and robotballx>=990:
+            ball_movespeedy = ball_movespeedy * 1
+            ball_movespeedx = ball_movespeedx * -1
+            ball_movespeedx = ball_movespeedx-1
+            ball_movespeedy = ball_movespeedy-1
+        if robotballx >= 1000-Circle_Samy_radius and robotballx>=1000+Circle_Samy_radius:
             robotballx = 500
             robotbally = 500
-            playerpoint = +1
-            ball_movespeedy=ball_movespeedy+1
-            ball_movespeedx=ball_movespeedx+1
-        if robotballx <= 0:
+            playerpoint = playerpoint+1
+            ball_movespeedx = 3
+            ball_movespeedy = 3
+            space=1
+        if robotballx <= 0-Circle_Samy_radius and robotballx<=0+Circle_Samy_radius:
             robotballx = 500
             robotbally = 500
-            computerpoint = +1
-            ball_movespeedy=ball_movespeedy+1
-            ball_movespeedx=ball_movespeedx+1
+            computerpoint = computerpoint+1
+            print(computerpoint)
+            ball_movespeedx = 3
+            ball_movespeedy = 3
+            space=1
         if robotbally <= 0:
-            ball_movespeedy+=ball_movespeedy*-1
-            ball_movespeedx += ball_movespeedx * -1
+            ball_movespeedy=ball_movespeedy*-1
         if robotbally >= 1000:
-            ball_movespeedy += ball_movespeedy * -1
-            ball_movespeedx += ball_movespeedx * -1
-        if playerpoint == 10:
+            ball_movespeedy = ball_movespeedy * -1
+        if playerpoint >= 10:
             endgame ()
-        if computerpoint == 10:
+        if computerpoint >= 10:
             endgame ()
         PeopleTrademarktoomuch ()
 def start():
@@ -171,16 +189,10 @@ def goodmorning():
         elif space == 1:
             space = 0
 
-''''''''''
-    K_UP
-    K_DOWN
-    K_RIGHT
-    K_LEFT
-'''''''''
 # game loop
-running=True
 
-while running:
+
+while running==True:
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             bluestripes()
