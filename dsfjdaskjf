@@ -1,0 +1,49 @@
+from Tkinter import *
+#import pygame
+
+unicorn=Tk()
+
+def playbuttonpressed():
+
+    global tiggers
+    global buttonnumber
+    unicorn.quit()
+
+    tiggers = 1
+    buttonnumber=3
+
+unicorn.title("Unicornlandia")
+
+Title=Label(unicorn, text="Unicornlandia", fg="Pink", bg="White", font="Versalli", height=10, width=40)
+
+Title.pack(expand=False, side="top")
+
+Playbutton=Button(unicorn, text="Play", fg="White", bg="Pink", height=5, width=30, command =playbuttonpressed)
+
+Playbutton.pack(expand=False, side="top")
+
+unicorn.mainloop()
+
+
+
+if tiggers ==1:
+
+    print("hiya")
+    #pygame.init()
+    #screen=pygame.display.set_mode((500,500))
+
+if buttonnumber==3:
+    hogwarts = Tk()
+    hogwartswidth=1000
+    hogwartsheight=800
+    hogwarts.title("Image manipulation")
+    hogwarts.wm_minsize(width=hogwartswidth, height=hogwartsheight)
+    canvas=Canvas(hogwarts, bg="Red", width=hogwartswidth, height=hogwartsheight)
+    canvas.grid(row=1, columnspan=10)
+    circlebutton=Button(hogwarts, text="circle")
+    circlebutton.grid(row=2, column=1)
+    CreateImage():
+        image=Image("")
+    addimagebackground=Button(canvas, text="Add image background", command=CreateImage)
+    addimagebackground.grid(row=3, column=2)
+    hogwarts.mainloop()
