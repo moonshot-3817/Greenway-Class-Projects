@@ -1,0 +1,34 @@
+
+from tkinter import *
+
+
+class lol:
+    def __init__(self, master):  # gets called automatically whenever u create an objecet
+        frame = Frame(master)  # master is main window
+        frame.pack()
+        self.b2 = Button(frame, text="Create new window", command=self.create_window)
+        self.b2.pack()
+
+        self.photo = PhotoImage(file="Williams_Syndrome.png")
+        self.label = Label(frame, image=self.photo)
+        self.label.pack()
+    def create_window(self):
+        window = Toplevel(root)
+
+class hi:# class is accessed through an object
+    def __init__(self, master):  # gets called automatically whenever u create an objecet
+        frame = Frame(master)  # master is main window
+        frame.pack()
+
+        self.printbutton = Button(frame, text="printMessage", command=self.printMessage)
+        self.printbutton.pack(side=LEFT)
+        self.quitbutton = Button(frame, text="quit", command=master.destroy)
+        self.quitbutton.pack(side=LEFT)
+        self.suits = ['Spades', 'Hearts', 'Diamonds', 'Clubs']
+
+    def printMessage(self):
+        print("yo this worked")
+root = Tk()
+b=hi(root)
+lolz=lol(root)
+#don't copy this, just refrence
