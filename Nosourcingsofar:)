@@ -1,0 +1,17 @@
+from tkinter import *
+import pygame
+unicorn=Tk()
+def playbuttonpressed():
+    global tiggers
+    unicorn.quit()
+    tiggers = 1
+unicorn.title("Unicornlandia")
+Title=Label(unicorn, text="Unicornlandia", fg="Pink", font="Versalli", height=10, width=40)
+Title.pack(expand=False, side="top")
+Playbutton=Button(unicorn, text="Play", fg="White", bg="Pink", height=5, width=30, command =playbuttonpressed)
+Playbutton.pack(expand=False, side="top")
+unicorn.mainloop()
+
+if tiggers ==1:
+    print("hiya")
+    #pygame will be inserted
