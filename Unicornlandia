@@ -1,4 +1,4 @@
-from Tkinter import *
+from tkinter import *
 #import pygame
 
 unicorn=Tk()
@@ -33,7 +33,7 @@ if tiggers ==1:
     #screen=pygame.display.set_mode((500,500))
 
 if buttonnumber==3:
-    hogwarts = Tk()
+    hogwarts = Toplevel() #https://stackoverflow.com/questions/20251161/tkinter-tclerror-image-pyimage3-doesnt-exist
     hogwartswidth=1000
     hogwartsheight=800
     hogwarts.title("Image manipulation")
@@ -42,8 +42,12 @@ if buttonnumber==3:
     canvas.grid(row=1, columnspan=10)
     circlebutton=Button(hogwarts, text="circle")
     circlebutton.grid(row=2, column=1)
-    CreateImage():
-        image=Image("")
+    def CreateImage():
+        global image2
+        global imagelabel
+        image2=PhotoImage(file="150.png", width=900, height=900)
+        imagelabel=Label(master=hogwarts, image=image2)
+        imagelabel.grid (row=8, column=3)
     addimagebackground=Button(canvas, text="Add image background", command=CreateImage)
     addimagebackground.grid(row=3, column=2)
     hogwarts.mainloop()
