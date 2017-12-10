@@ -1,0 +1,429 @@
+from tkinter import *
+import pygame
+from pygame.locals import *
+import random
+
+Samychooses=800
+sprinklelocationx=700
+sprinklelocationy=80
+frostinglocationx=700
+frostinglocationy=280
+cherrylocationx=700
+cherrylocationy=675
+cookielocationx=100
+cookielocationy=675
+frostingwinterlocationx=100
+frostingwinterlocationy=280
+sprinkleworks=0
+otherboxworks=0
+other3boxworks=0
+other4boxworks=0
+other5boxworks=0
+other6boxworks=0
+other7boxworks=0
+
+cupsss=0
+frostingsss=0
+frostingwintersss=0
+root = Tk()
+root.withdraw() #https://stackoverflow.com/questions/15046498/toplevel-in-tkinter-prevent-two-windows-from-opening
+
+unicorn=Toplevel()
+
+colors=("Red", "Pink", "Blue", "White", "Green", "paleturquoise", "indianred", "limegreen", "crimson", "blueviolet", "khaki", "beige")
+
+sprinklecolors=((250, 0, 0), (0, 0, 0), (0, 250, 0), (0, 0, 250))#("Red", "Brown", "Blue", "White", "Green", "Purple", "Yellow", "Orange")
+cupcakecolor=((250, 0, 0), (0, 0, 0), (0, 250, 0), (0, 0, 250), (100, 100, 100))
+number=0
+cupchoice=(cupcakecolor[0])
+print(cupchoice)
+sprinkles = random.choice (sprinklecolors)
+# change these colors to their numbers in pygame
+def playbuttonpressed():
+
+    global tiggers
+    global buttonnumber
+    unicorn.quit()
+
+    tiggers = 1
+    #buttonnumber=3
+
+unicorn.title("Winter Wonder")
+
+global tink
+tink=800
+
+unicorn.wm_minsize(800, 800)
+
+nutterbutter=0
+
+def nutella():
+    print("hey")
+    global nutterbutter
+    nutterbutter=1
+
+def nutella2():
+    global nutterbutter
+    global taco
+    nutterbutter=2
+    taco=random.choice(colors)
+
+def mousey(event):
+    global nuttterbutter
+    print("hi")
+    if nutterbutter==1:
+        print ("hit")
+        global Samychooses
+        global google
+        global unicorncanvas
+        global boogle
+        google = PhotoImage (file="150.png", width=tink, height=tink) # going to add more images
+
+        boogle = unicorncanvas.create_image (tink/2, tink/2, image=google)
+
+unicorncanvas = Canvas(unicorn, bg="paleturquoise", width=tink, height=tink)
+unicorncanvas.grid (rowspan=5, columnspan=5)
+
+Title=Label(unicorn, text="Winter Wonder", fg="royalblue", bg="White", font="Versalli", height=10, width=40)
+
+Title.grid(row=1, column=2)
+
+Playbutton=Button(unicorn, text="Play", fg="White", bg="royalblue", height=5, width=30, command =playbuttonpressed)
+
+Playbutton.grid(row=2, column=2)
+
+def SpartanSphere(event):
+    if nutterbutter==2:
+        global size2
+        size2=10
+        x1, y1=(event.x-size2),(event.y-size2)
+        x2, y2=(event.x+size2),(event.y+size2)
+        pbandj=unicorncanvas.create_oval(x1, y1, x2, y2, fill=taco, outline=taco, width=4) #going to add more colors
+
+motion = Button (unicorn, text="paint on the title", bg="lightseagreen", fg="White", command=nutella2)
+motion.grid (row=3, column=3)
+wombat = Button (unicorn, text="Press twice for images", bg="lightseagreen", fg="White", command=nutella)
+wombat.grid(row=3, column=1)
+
+motion.bind("<B1-Motion>", SpartanSphere)
+unicorncanvas.bind("<B1-Motion>", SpartanSphere)
+wombat.bind("<Button-1>", mousey)
+
+unicorn.mainloop()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if tiggers ==1:
+    fps = pygame.time.Clock ()
+    print("hiya")
+    pygame.init()
+    pygame_color=(250, 250, 250)
+    pygame_color2=(250, 250, 0)
+    pygame_color3=(250, 0, 250)#pink
+    pygame_color4=(0, 250, 250)
+    pygame_color5=(250, 0, 0) #Red
+    pygame_color6=(0, 0, 250)
+    pygame_color7=(0, 0, 0) #black
+    pygame_color8=(0, 250, 0) #green
+    screen=pygame.display.set_mode((800,800))
+    pygame.display.set_caption("Cupcake Factory")
+
+    screen.fill(pygame_color)
+    workmaybe = pygame.image.load("150.png") #https://www.youtube.com/watch?v=_1dPkU8c6VA
+    screen.blit(workmaybe, (0,0)) #https://www.youtube.com/watch?v=_1dPkU8c6VA
+    working=True
+    x=(800/2)-175
+    y=(800/2)
+    sizeheight=350
+    sizewidth=350
+
+    #going to do something hwere you click to go get cupcake
+
+    #in cupcake:
+    def inCupcake():
+        global sprinkles, sprinklecolors, sprinklesize, sprinklebox, sprinkleworks
+        global sprinks, sprinks2, sprinks3, sprinks4, sprinks5, sprinks6, sprinks7, sprinks8
+        global otherbox, other2box, other3box, other4box, other5box, other6box, other7box
+        global held
+        global coordinates, cup, cupsss, cupchoice, number, frostingsss, frostinglocationx, frostinglocationy
+        global xcoordinate
+        global ycoordinate, winterornot, cherrylocationx, cherrylocationy, cherryline
+        global sprinklelocationx, frostingwinter7, frostingwinter8
+        global sprinklelocationy, frostingsizex, frostingsizey, cookielocationx, cookielocationy
+        global other2boxworks, other3boxworks, otherboxworks, other4boxworks, other5boxworks, other6boxworks, other7boxworks
+        global frosting, frosting2, frosting3, frosting4, frosting5, frosting6, frosting7, frosting8
+        global frostingwintersss, frostingwinlocationx, frostingwinlocationy, frostingwintersss
+        global frostingwinter, frostingwinter2, frostingwinter3, frostingwinter4, frostingwinter5, frostingwinter6
+        sprinklesize=10
+        frostingsizex=350
+        frostingsizey=175
+        #if startcupcakeifyouclickponcupcakeimageinconerbelt==1:
+        screen.fill (pygame_color4)
+        cupbase = pygame.image.load ("150.png")
+        pygame.draw.rect (screen, pygame_color6, [x, y, sizewidth, sizeheight])
+        #x=x+1
+        sprinklebox=pygame.draw.rect (screen, pygame_color5, [600, 0, 200, 150])
+        otherbox = pygame.draw.rect (screen, pygame_color7, [600, 200, 200, 150])
+        other2box = pygame.draw.rect (screen, pygame_color, [600, 400, 200, 150])
+        other3box = pygame.draw.rect (screen, pygame_color3, [600, 600, 200, 150])
+        other4box = pygame.draw.rect (screen, pygame_color7, [0, 200, 200, 150])
+        other5box = pygame.draw.rect (screen, pygame_color3, [0, 400, 200, 150])
+        other6box = pygame.draw.rect (screen, pygame_color5, [0, 0, 200, 150])
+        other7box = pygame.draw.rect (screen, pygame_color, [0, 600, 200, 150])
+        if event.type == MOUSEBUTTONDOWN:  # https://stackoverflow.com/questions/34601588/how-to-move-image-with-mouse-in-pygame
+            held = True
+            sprinkles = random.choice (sprinklecolors)
+        else:
+            held=False
+        if held==True:
+            coordinates=pygame.mouse.get_pos()
+            print(coordinates)
+            xcoordinate=int(coordinates[0])
+            ycoordinate = int(coordinates[1]) #https://stackoverflow.com/questions/29311819/how-to-convert-tuple-type-to-int-on-python
+            def workornot():
+                global sprinkleworks, otherboxworks, other2boxworks, other3boxworks, other4boxworks
+                global other5boxworks, other6boxworks, other7boxworks
+                sprinkleworks=0
+                otherboxworks=0
+                other2boxworks=0
+                other3boxworks=0
+                other4boxworks=0
+                other5boxworks=0
+                other6boxworks=0
+                other7boxworks=0
+            if sprinklebox.collidepoint(pygame.mouse.get_pos()): #https://stackoverflow.com/questions/12150957/pygame-action-when-mouse-click-on-rect
+                workornot ()
+                sprinkleworks=1
+            if sprinkleworks==1:
+                sprinklelocationx = 0
+                sprinklelocationy= 0
+                sprinklelocationx+=xcoordinate
+                sprinklelocationy+=ycoordinate
+
+            if otherbox.collidepoint(pygame.mouse.get_pos()):
+                workornot ()
+                otherboxworks = 1
+            if otherboxworks == 1:
+                print (otherboxworks)
+                frostingsss=1
+                winterornot=0
+                frostinglocationx = 0
+                frostinglocationy = 0
+                frostinglocationx += xcoordinate-175
+                frostinglocationy += ycoordinate-100
+
+            if other2box.collidepoint(pygame.mouse.get_pos()):
+                workornot ()
+                other2boxworks = 1
+                cupchoice=(cupcakecolor[number])
+                if number<4:
+                    number=number+1
+                else:
+                    number=0
+                if other2boxworks ==1:
+                    cupsss=1
+            if other3box.collidepoint(pygame.mouse.get_pos()):
+                workornot ()
+                other3boxworks = 1
+            if other3boxworks==1:
+                cherrylocationx = 0
+                cherrylocationy = 0
+                cherrylocationx += xcoordinate
+                cherrylocationy += ycoordinate
+            if other4box.collidepoint(pygame.mouse.get_pos()):
+                print ("%%%%%%%4")
+                workornot ()
+                other4boxworks = 1
+                winterornot = 1
+            if other4boxworks==1:
+                frostingwintersss = 1
+                frostingwinlocationx = 0
+                frostingwinlocationy = 0
+                frostingwinlocationx += xcoordinate - 175
+                frostingwinlocationy += ycoordinate - 100
+            if other5box.collidepoint(pygame.mouse.get_pos()):
+                workornot ()
+                other5boxworks = 1
+            if other5boxworks==1:
+                print("%%%%%%%5")
+            if other6box.collidepoint(pygame.mouse.get_pos()):
+                print ("%%%%%%%6")
+                workornot ()
+                other6boxworks=1
+            if other7box.collidepoint(pygame.mouse.get_pos()):
+                print ("%%%%%%%7")
+                workornot ()
+                other7boxworks = 1
+            if other7boxworks ==1:
+                cookielocationx = 0
+                cookielocationy = 0
+                cookielocationx += xcoordinate
+                cookielocationy += ycoordinate
+
+        if cupsss==1:
+            cup = pygame.draw.polygon (screen, cupchoice,
+                                       [[x, y], [x + 50, y + sizeheight], [x + sizewidth - 50, y + sizeheight],
+                                        [x + sizewidth, y]])
+        frosting=pygame.draw.ellipse (screen, pygame_color6, [650, 275, 100, 50])
+        frosting2 = pygame.draw.ellipse (screen, pygame_color3, [650+12, 255, 75, 50])
+        frosting3 = pygame.draw.ellipse (screen, pygame_color2, [650+24, 235, 50, 45])
+        frosting4 = pygame.draw.ellipse (screen, pygame_color, [650+30, 225, 40, 30])
+        if frostingsss==1 and winterornot==0:
+            frosting5 = pygame.draw.ellipse (screen, pygame_color6, [frostinglocationx, frostinglocationy, frostingsizex, frostingsizey])
+            frosting6 = pygame.draw.ellipse (screen, pygame_color3, [frostinglocationx + 12, frostinglocationy-20, frostingsizex-25, frostingsizey-30])
+            frosting7 = pygame.draw.ellipse (screen, pygame_color6, [frostinglocationx + 24, frostinglocationy-40, frostingsizex-50, frostingsizey-60])
+            frosting8 = pygame.draw.ellipse (screen, pygame_color3, [frostinglocationx + 48, frostinglocationy-60, frostingsizex-100, frostingsizey-90])
+            frosting10 = pygame.draw.ellipse (screen, pygame_color6, [frostinglocationx + 70, frostinglocationy-80, frostingsizex-150, frostingsizey-110])
+            frosting11 = pygame.draw.ellipse (screen, pygame_color3, [frostinglocationx + 110, frostinglocationy-100, frostingsizex-230, frostingsizey-120])
+        frostingwinter = pygame.draw.ellipse (screen, pygame_color6, [0, 275, 100, 50])
+        frostingwinter2 = pygame.draw.ellipse (screen, pygame_color3, [0 + 12, 255, 75, 50])
+        frostingwinter3 = pygame.draw.ellipse (screen, pygame_color2, [0 + 24, 235, 50, 45])
+        frostingwinter4 = pygame.draw.ellipse (screen, pygame_color, [0 + 30, 225, 40, 30])
+        if frostingwintersss == 1 and winterornot==1:
+            frostingwinter5 = pygame.draw.ellipse (screen, pygame_color6,
+                                             [frostingwinlocationx, frostingwinlocationy, frostingsizex, frostingsizey])
+            frostingwinter6 = pygame.draw.ellipse (screen, pygame_color,
+                                             [frostingwinlocationx + 12, frostingwinlocationy - 20, frostingsizex - 25,
+                                              frostingsizey - 30])
+            frostingwinter7 = pygame.draw.ellipse (screen, pygame_color6,
+                                             [frostingwinlocationx + 24, frostingwinlocationy - 40, frostingsizex - 50,
+                                              frostingsizey - 60])
+            frostingwinter8 = pygame.draw.ellipse (screen, pygame_color4,
+                                             [frostingwinlocationx + 48, frostingwinlocationy - 60, frostingsizex - 100,
+                                              frostingsizey - 90])
+            frostingwinter10 = pygame.draw.ellipse (screen, pygame_color5,
+                                              [frostingwinlocationx + 70, frostingwinlocationy - 80, frostingsizex - 150,
+                                               frostingsizey - 110])
+            frostingwinter11 = pygame.draw.ellipse (screen, pygame_color2,
+                                              [frostingwinlocationx + 110, frostingwinlocationy - 100, frostingsizex - 230,
+                                               frostingsizey - 120])
+
+        cherry = pygame.draw.circle (screen, pygame_color5, (cherrylocationx, cherrylocationy), 30)
+        cherryline = pygame.draw.line (screen, pygame_color5, (cherrylocationx, cherrylocationy-15),(cherrylocationx+30, cherrylocationy-65))
+        cookie = pygame.draw.circle (screen, pygame_color7, (cookielocationx+7, cookielocationy+7), 40)
+        cookie2 = pygame.draw.circle (screen, pygame_color, (cookielocationx+3, cookielocationy+3), 40)
+        cookie3 = pygame.draw.circle (screen, pygame_color7, (cookielocationx, cookielocationy), 40)
+
+        sprinks=pygame.draw.line(screen, sprinkles, (sprinklelocationx, sprinklelocationy), (sprinklelocationx+sprinklesize, sprinklelocationy+sprinklesize))
+        sprinks2 = pygame.draw.line (screen, pygame_color2, (sprinklelocationx-30, sprinklelocationy-40),
+                                    (sprinklelocationx + sprinklesize-30, sprinklelocationy + sprinklesize-40))
+        sprinks3 = pygame.draw.line (screen, pygame_color3, (sprinklelocationx+10, sprinklelocationy-50),
+                                    (sprinklelocationx + sprinklesize+10, sprinklelocationy + sprinklesize-50))
+        sprinks4 = pygame.draw.line (screen, pygame_color4, (sprinklelocationx+50, sprinklelocationy),
+                                    (sprinklelocationx + sprinklesize+50, sprinklelocationy + sprinklesize))
+        sprinks5 = pygame.draw.line (screen, pygame_color, (sprinklelocationx+20, sprinklelocationy-20),
+                                    (sprinklelocationx + sprinklesize+20, sprinklelocationy + sprinklesize-20))
+        sprinks6 = pygame.draw.line (screen, pygame_color5, (sprinklelocationx-30, sprinklelocationy+30),
+                                    (sprinklelocationx + sprinklesize-30, sprinklelocationy + sprinklesize+30))
+        sprinks7 = pygame.draw.line (screen, pygame_color6, (sprinklelocationx+50, sprinklelocationy-10),#black
+                                    (sprinklelocationx + sprinklesize+50, sprinklelocationy + sprinklesize-10))
+        sprinks8 = pygame.draw.line (screen, pygame_color7, (sprinklelocationx-60, sprinklelocationy+5),
+                                     (sprinklelocationx + sprinklesize-60, sprinklelocationy + sprinklesize+5))
+        cup = pygame.draw.polygon (screen, pygame_color5,
+                                   [[600, 400], [800, 400], [800+50, 500], [600-50, 500]])  # https://stackoverflow.com/questions/25018637/how-do-i-draw-a-polygon-in-python
+    while working == True:
+        for event in pygame.event.get ():
+
+            if event.type == QUIT:
+                working = False
+            if event.type==MOUSEBUTTONDOWN: #https://stackoverflow.com/questions/34601588/how-to-move-image-with-mouse-in-pygame
+                held=True
+        pygame.display.update ()
+        fps.tick (60)
+        inCupcake()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+buttonnumber=0 #DELETE THIS LATER
+if buttonnumber==1:
+    print("have fun samy")
+if buttonnumber==2:
+    print("we are going to make this work")
+if buttonnumber==3:
+    hogwarts = Toplevel() #https://stackoverflow.com/questions/20251161/tkinter-tclerror-image-pyimage3-doesnt-exist
+    hogwartswidth=1000
+    hogwartsheight=800
+    hogwarts.title("Image manipulation")
+    hogwarts.wm_minsize(width=hogwartswidth, height=hogwartsheight)
+    size=30
+    shape=0
+
+    def Typecircle():
+        global shape
+        shape=1
+    def Typeimage():
+        global shape
+        shape=2
+    def Typepaint():
+        global shape
+        shape=3
+
+    canvas=Canvas(hogwarts, bg="Blue", width=hogwartswidth-40, height=hogwartswidth-40)
+    canvas.grid(row=1, columnspan=10)
+    circlebutton=Button(hogwarts, text="circle", command=Typecircle)
+    circlebutton.grid(row=2, column=1)
+    def CreateImage():
+        global image2
+        global imagelabel
+        global rawr
+        image2=PhotoImage(file="150.png", width=900, height=900)
+        imagelabel=Label(master=canvas, image=image2)
+        imagelabel.grid (row=2, column=3)
+        tiggers=0
+        if tiggers==1:
+            rawr = canvas.create_image (hogwartswidth/2,hogwartswidth/2, image=image2)
+    addimagebackground=Button(hogwarts, text="Get Memed", command=CreateImage)
+    addimagebackground.grid(row=2, column=2)
+    actualimage=Button(hogwarts, text="Add image", command=Typeimage)
+    actualimage.grid(row=2, column=4)
+
+    def click(event):#https://stackoverflow.com/questions/29789554/tkinter-draw-rectangle-using-a-mouse
+        print ("Mouse position: (%s %s)" % (event.x, event.y))
+        global shape
+        global image2
+        global puppy
+        global ypos
+        global xpos
+        if shape==1:
+            print(shape)
+            dog=canvas.create_oval(event.x-size, event.y-size, event.x+size, event.y+size, fill="White", outline="Black", width=3) #https://stackoverflow.com/questions/36427858/trouble-creating-oval-widgets-in-python-tkinter
+        if shape==2:
+            print(shape)
+            image2 = PhotoImage (file="150.png", width=size*8, height=size*8)
+            if event.x>60:
+                xpos=event.x
+                ypos=event.y
+            puppy=canvas.create_image(xpos, ypos, image=image2) # only helped by all sources including https://stackoverflow.com/questions/20015030/python-2-7-how-to-add-images-on-the-canvas-with-tkinter
+            print(event.x)
+    circlebutton.bind("<Button-1>", click)
+    canvas.bind("<Button-1>", click)
+    actualimage.bind("<Button-1>", click)
+
+
+
+    hogwarts.mainloop()
