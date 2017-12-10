@@ -12,8 +12,8 @@ cherrylocationx=700
 cherrylocationy=675
 cookielocationx=100
 cookielocationy=675
-spurklelocationx=0
-spurklelocationy=80
+spurklelocationx=100
+spurklelocationy=75
 frostingwinterlocationx=100
 frostingwinterlocationy=280
 sprinkleworks=0
@@ -23,8 +23,8 @@ other4boxworks=0
 other5boxworks=0
 other6boxworks=0
 other7boxworks=0
-spurkleposx = [10]
-spurkleposy = [10]
+spurkleposx = [0]
+spurkleposy = [0]
 hey=0
 heyy=0
 
@@ -119,12 +119,33 @@ unicorn.mainloop()
 
 
 
+if tiggers==1:
+    question =Tk()
+    question.title("Options")
+    def option1():
+        global buttonnumber
+        buttonnumber=1
+        question.quit ()
+    def option2():
+        global buttonnumber
+        buttonnumber=2
+        question.quit()
+    def option3():
+        global buttonnumber
+        buttonnumber=3
+        question.quit ()
+    Story1=Button(question, text="Option 1", bg="royalblue", fg= "White", command=option1)
+    Story1.pack()
+    Story2=Button(question, text="Option 2", bg="royalblue", fg= "White",command=option2)
+    Story2.pack ()
+    Story3=Button(question, text="Option3", bg="royalblue", fg= "White", command=option3)
+    Story3.pack ()
+    question.mainloop()
 
 
 
 
-
-if tiggers ==1:
+if buttonnumber ==2:
     fps = pygame.time.Clock ()
     print("hiya")
     pygame.init()
@@ -299,13 +320,13 @@ if tiggers ==1:
         frosting3 = pygame.draw.ellipse (screen, pygame_color2, [650+24, 235, 50, 45])
         frosting4 = pygame.draw.ellipse (screen, pygame_color, [650+30, 225, 40, 30])
         if frostingsss==1 and winterornot==0:
-            frosting5 = pygame.draw.ellipse (screen, pygame_color6, [frostinglocationx, frostinglocationy, frostingsizex, frostingsizey])
+            frosting5 = pygame.draw.ellipse (screen, pygame_color, [frostinglocationx, frostinglocationy, frostingsizex, frostingsizey])
             frosting6 = pygame.draw.ellipse (screen, pygame_color3, [frostinglocationx + 12, frostinglocationy-20, frostingsizex-25, frostingsizey-30])
-            frosting7 = pygame.draw.ellipse (screen, pygame_color6, [frostinglocationx + 24, frostinglocationy-40, frostingsizex-50, frostingsizey-60])
-            frosting8 = pygame.draw.ellipse (screen, pygame_color3, [frostinglocationx + 48, frostinglocationy-60, frostingsizex-100, frostingsizey-90])
+            frosting7 = pygame.draw.ellipse (screen, pygame_color4, [frostinglocationx + 24, frostinglocationy-40, frostingsizex-50, frostingsizey-60])
+            frosting8 = pygame.draw.ellipse (screen, pygame_color5, [frostinglocationx + 48, frostinglocationy-60, frostingsizex-100, frostingsizey-90])
             frosting10 = pygame.draw.ellipse (screen, pygame_color6, [frostinglocationx + 70, frostinglocationy-80, frostingsizex-150, frostingsizey-110])
-            frosting11 = pygame.draw.ellipse (screen, pygame_color3, [frostinglocationx + 110, frostinglocationy-100, frostingsizex-230, frostingsizey-120])
-        frostingwinter = pygame.draw.ellipse (screen, pygame_color6, [0, 275, 100, 50])
+            frosting11 = pygame.draw.ellipse (screen, pygame_color7, [frostinglocationx + 110, frostinglocationy-100, frostingsizex-230, frostingsizey-120])
+        frostingwinter = pygame.draw.ellipse (screen, pygame_color8, [0, 275, 100, 50])
         frostingwinter2 = pygame.draw.ellipse (screen, pygame_color3, [0 + 12, 255, 75, 50])
         frostingwinter3 = pygame.draw.ellipse (screen, pygame_color2, [0 + 24, 235, 50, 45])
         frostingwinter4 = pygame.draw.ellipse (screen, pygame_color, [0 + 30, 225, 40, 30])
@@ -318,13 +339,13 @@ if tiggers ==1:
             frostingwinter7 = pygame.draw.ellipse (screen, pygame_color6,
                                              [frostingwinlocationx + 24, frostingwinlocationy - 40, frostingsizex - 50,
                                               frostingsizey - 60])
-            frostingwinter8 = pygame.draw.ellipse (screen, pygame_color4,
+            frostingwinter8 = pygame.draw.ellipse (screen, pygame_color,
                                              [frostingwinlocationx + 48, frostingwinlocationy - 60, frostingsizex - 100,
                                               frostingsizey - 90])
-            frostingwinter10 = pygame.draw.ellipse (screen, pygame_color5,
+            frostingwinter10 = pygame.draw.ellipse (screen, pygame_color6,
                                               [frostingwinlocationx + 70, frostingwinlocationy - 80, frostingsizex - 150,
                                                frostingsizey - 110])
-            frostingwinter11 = pygame.draw.ellipse (screen, pygame_color2,
+            frostingwinter11 = pygame.draw.ellipse (screen, pygame_color,
                                               [frostingwinlocationx + 110, frostingwinlocationy - 100, frostingsizex - 230,
                                                frostingsizey - 120])
 
@@ -338,17 +359,17 @@ if tiggers ==1:
         spurrkles()
         spurkles2 = pygame.draw.circle (screen, pygame_color2, (spurklelocationx, spurklelocationy), 10)
         spurrkles ()
-        spurkles3 = pygame.draw.circle (screen, pygame_color3, (spurklelocationx+random.choice(spurkleposx), spurklelocationy+random.choice(spurkleposy)), 10,)
+        spurkles3 = pygame.draw.circle (screen, pygame_color5, (spurklelocationx+random.choice(spurkleposx), spurklelocationy+random.choice(spurkleposy)), 10,)
         spurrkles ()
         spurkles4 = pygame.draw.circle(screen, pygame_color4, (spurklelocationx+random.choice(spurkleposx), spurklelocationy+random.choice(spurkleposy)),10)
         spurrkles ()
         spurkles5 = pygame.draw.circle(screen, pygame_color, (spurklelocationx+random.choice(spurkleposx), spurklelocationy+random.choice(spurkleposy)), 10)
         spurrkles ()
-        spurkles6 = pygame.draw.circle(screen, pygame_color5, (spurklelocationx+random.choice(spurkleposx), spurklelocationy+random.choice(spurkleposy)), 10)
+        spurkles6 = pygame.draw.circle(screen, pygame_color7, (spurklelocationx+random.choice(spurkleposx), spurklelocationy+random.choice(spurkleposy)), 10)
         spurrkles ()
         spurkles7 = pygame.draw.circle(screen, pygame_color6, (spurklelocationx+random.choice(spurkleposx), spurklelocationy+random.choice(spurkleposy)), 10)
         spurrkles ()
-        spurkles8 = pygame.draw.circle(screen, pygame_color7, (spurklelocationx+random.choice(spurkleposx), spurklelocationy+random.choice(spurkleposy)), 10)
+        spurkles8 = pygame.draw.circle(screen, pygame_color3, (spurklelocationx+random.choice(spurkleposx), spurklelocationy+random.choice(spurkleposy)), 10)
 
         sprinks=pygame.draw.line(screen, sprinkles, (sprinklelocationx, sprinklelocationy), (sprinklelocationx+sprinklesize, sprinklelocationy+sprinklesize))
         sprinks2 = pygame.draw.line (screen, sprinkles, (sprinklelocationx-30, sprinklelocationy-40),
@@ -378,20 +399,19 @@ if tiggers ==1:
         fps.tick (60)
         inCupcake()
 
-
-
-
-
-
-
-
-
-buttonnumber=0 #DELETE THIS LATER
 if buttonnumber==1:
     print("have fun samy")
-if buttonnumber==2:
-    print("we are going to make this work")
+
+
+
 if buttonnumber==3:
+    from PIL import Image
+
+    im = Image.open ("150.png")
+    newim = im.crop ((500, 500, 800, 800))
+    newim2 = newim.rotate (90, expand=False)
+    im.paste (im)
+    newim2.show ()
     hogwarts = Toplevel() #https://stackoverflow.com/questions/20251161/tkinter-tclerror-image-pyimage3-doesnt-exist
     hogwartswidth=1000
     hogwartsheight=800
@@ -450,7 +470,5 @@ if buttonnumber==3:
     circlebutton.bind("<Button-1>", click)
     canvas.bind("<Button-1>", click)
     actualimage.bind("<Button-1>", click)
-
-
 
     hogwarts.mainloop()
