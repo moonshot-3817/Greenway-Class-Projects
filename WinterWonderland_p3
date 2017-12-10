@@ -12,6 +12,8 @@ cherrylocationx=700
 cherrylocationy=675
 cookielocationx=100
 cookielocationy=675
+spurklelocationx=0
+spurklelocationy=80
 frostingwinterlocationx=100
 frostingwinterlocationy=280
 sprinkleworks=0
@@ -21,6 +23,10 @@ other4boxworks=0
 other5boxworks=0
 other6boxworks=0
 other7boxworks=0
+spurkleposx = [10]
+spurkleposy = [10]
+hey=0
+heyy=0
 
 cupsss=0
 frostingsss=0
@@ -118,12 +124,6 @@ unicorn.mainloop()
 
 
 
-
-
-
-
-
-
 if tiggers ==1:
     fps = pygame.time.Clock ()
     print("hiya")
@@ -149,17 +149,30 @@ if tiggers ==1:
     sizewidth=350
 
     #going to do something hwere you click to go get cupcake
-
+    def spurrkles():
+        global spurkleposx, spurkleposy, hey, heyy
+        if held==True:
+            if other6boxworks==1:
+                hey=0
+                heyy=0
+                hey += random.randint (-150, 150)
+                heyy += random.randint (-150, 150)
+                if len(spurkleposx)<20:
+                    spurkleposx.append(hey)
+                    spurkleposy.append (heyy)
+                else:
+                    del spurkleposx[1:10] #https://stackoverflow.com/questions/11520492/difference-between-del-remove-and-pop-on-lists
+                    del spurkleposy[1:10]
     #in cupcake:
     def inCupcake():
         global sprinkles, sprinklecolors, sprinklesize, sprinklebox, sprinkleworks
         global sprinks, sprinks2, sprinks3, sprinks4, sprinks5, sprinks6, sprinks7, sprinks8
         global otherbox, other2box, other3box, other4box, other5box, other6box, other7box
-        global held
+        global held, spurkleposx, spurkleposy
         global coordinates, cup, cupsss, cupchoice, number, frostingsss, frostinglocationx, frostinglocationy
         global xcoordinate
         global ycoordinate, winterornot, cherrylocationx, cherrylocationy, cherryline
-        global sprinklelocationx, frostingwinter7, frostingwinter8
+        global sprinklelocationx, frostingwinter7, frostingwinter8, spurklelocationx, spurklelocationy
         global sprinklelocationy, frostingsizex, frostingsizey, cookielocationx, cookielocationy
         global other2boxworks, other3boxworks, otherboxworks, other4boxworks, other5boxworks, other6boxworks, other7boxworks
         global frosting, frosting2, frosting3, frosting4, frosting5, frosting6, frosting7, frosting8
@@ -261,6 +274,12 @@ if tiggers ==1:
                 print ("%%%%%%%6")
                 workornot ()
                 other6boxworks=1
+            if other6boxworks==1:
+                circular=1
+                spurklelocationx = 0
+                spurklelocationy = 0
+                spurklelocationx += xcoordinate
+                spurklelocationy += ycoordinate
             if other7box.collidepoint(pygame.mouse.get_pos()):
                 print ("%%%%%%%7")
                 workornot ()
@@ -314,21 +333,37 @@ if tiggers ==1:
         cookie = pygame.draw.circle (screen, pygame_color7, (cookielocationx+7, cookielocationy+7), 40)
         cookie2 = pygame.draw.circle (screen, pygame_color, (cookielocationx+3, cookielocationy+3), 40)
         cookie3 = pygame.draw.circle (screen, pygame_color7, (cookielocationx, cookielocationy), 40)
+        spurrkles()
+        spurkles = pygame.draw.circle (screen, pygame_color8, (spurklelocationx+random.choice(spurkleposx), spurklelocationy+random.choice(spurkleposy)), 10)
+        spurrkles()
+        spurkles2 = pygame.draw.circle (screen, pygame_color2, (spurklelocationx, spurklelocationy), 10)
+        spurrkles ()
+        spurkles3 = pygame.draw.circle (screen, pygame_color3, (spurklelocationx+random.choice(spurkleposx), spurklelocationy+random.choice(spurkleposy)), 10,)
+        spurrkles ()
+        spurkles4 = pygame.draw.circle(screen, pygame_color4, (spurklelocationx+random.choice(spurkleposx), spurklelocationy+random.choice(spurkleposy)),10)
+        spurrkles ()
+        spurkles5 = pygame.draw.circle(screen, pygame_color, (spurklelocationx+random.choice(spurkleposx), spurklelocationy+random.choice(spurkleposy)), 10)
+        spurrkles ()
+        spurkles6 = pygame.draw.circle(screen, pygame_color5, (spurklelocationx+random.choice(spurkleposx), spurklelocationy+random.choice(spurkleposy)), 10)
+        spurrkles ()
+        spurkles7 = pygame.draw.circle(screen, pygame_color6, (spurklelocationx+random.choice(spurkleposx), spurklelocationy+random.choice(spurkleposy)), 10)
+        spurrkles ()
+        spurkles8 = pygame.draw.circle(screen, pygame_color7, (spurklelocationx+random.choice(spurkleposx), spurklelocationy+random.choice(spurkleposy)), 10)
 
         sprinks=pygame.draw.line(screen, sprinkles, (sprinklelocationx, sprinklelocationy), (sprinklelocationx+sprinklesize, sprinklelocationy+sprinklesize))
-        sprinks2 = pygame.draw.line (screen, pygame_color2, (sprinklelocationx-30, sprinklelocationy-40),
+        sprinks2 = pygame.draw.line (screen, sprinkles, (sprinklelocationx-30, sprinklelocationy-40),
                                     (sprinklelocationx + sprinklesize-30, sprinklelocationy + sprinklesize-40))
-        sprinks3 = pygame.draw.line (screen, pygame_color3, (sprinklelocationx+10, sprinklelocationy-50),
+        sprinks3 = pygame.draw.line (screen, sprinkles, (sprinklelocationx+10, sprinklelocationy-50),
                                     (sprinklelocationx + sprinklesize+10, sprinklelocationy + sprinklesize-50))
-        sprinks4 = pygame.draw.line (screen, pygame_color4, (sprinklelocationx+50, sprinklelocationy),
+        sprinks4 = pygame.draw.line (screen, sprinkles, (sprinklelocationx+50, sprinklelocationy),
                                     (sprinklelocationx + sprinklesize+50, sprinklelocationy + sprinklesize))
-        sprinks5 = pygame.draw.line (screen, pygame_color, (sprinklelocationx+20, sprinklelocationy-20),
+        sprinks5 = pygame.draw.line (screen, sprinkles, (sprinklelocationx+20, sprinklelocationy-20),
                                     (sprinklelocationx + sprinklesize+20, sprinklelocationy + sprinklesize-20))
-        sprinks6 = pygame.draw.line (screen, pygame_color5, (sprinklelocationx-30, sprinklelocationy+30),
+        sprinks6 = pygame.draw.line (screen, sprinkles, (sprinklelocationx-30, sprinklelocationy+30),
                                     (sprinklelocationx + sprinklesize-30, sprinklelocationy + sprinklesize+30))
-        sprinks7 = pygame.draw.line (screen, pygame_color6, (sprinklelocationx+50, sprinklelocationy-10),#black
+        sprinks7 = pygame.draw.line (screen, sprinkles, (sprinklelocationx+50, sprinklelocationy-10),#black
                                     (sprinklelocationx + sprinklesize+50, sprinklelocationy + sprinklesize-10))
-        sprinks8 = pygame.draw.line (screen, pygame_color7, (sprinklelocationx-60, sprinklelocationy+5),
+        sprinks8 = pygame.draw.line (screen, sprinkles, (sprinklelocationx-60, sprinklelocationy+5),
                                      (sprinklelocationx + sprinklesize-60, sprinklelocationy + sprinklesize+5))
         cup = pygame.draw.polygon (screen, pygame_color5,
                                    [[600, 400], [800, 400], [800+50, 500], [600-50, 500]])  # https://stackoverflow.com/questions/25018637/how-do-i-draw-a-polygon-in-python
@@ -342,14 +377,6 @@ if tiggers ==1:
         pygame.display.update ()
         fps.tick (60)
         inCupcake()
-
-
-
-
-
-
-
-
 
 
 
