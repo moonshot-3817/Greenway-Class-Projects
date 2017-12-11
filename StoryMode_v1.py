@@ -1,3 +1,5 @@
+#not finished at all
+
 import tkinter
 from tkinter import *
 from tkinter.font import Font
