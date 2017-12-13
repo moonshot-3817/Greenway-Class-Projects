@@ -704,10 +704,8 @@ if buttonnumber==3:
         def __init__(self, ughaclass=3, letsnotuseclasses=1):
             print("This is a class. Classes are bad. I recommend you don't use classes. They ruin everything")
             self.ughaclass+=1
-            self.im = Image.open ("Vanilla Cupcake.png")
-            self.newim = self.im.crop ((500, 500, 800, 800))
-            self.newim2 = self.newim.rotate (90, expand=False)
-            self.newim2.show ()
+            array=([1, 4, 5, 7])
+    Hi()
 
     #From here to
 
