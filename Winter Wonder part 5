@@ -702,9 +702,10 @@ if buttonnumber==3:
 # the sucky parts:
     class Hi(object):
         def __init__(self, ughaclass=3, letsnotuseclasses=1):
-            print("This is a class. Classes are bad. I recommend you don't use classes. They ruin everything")
+            self.ughaclass=1
             self.ughaclass+=1
             array=([1, 4, 5, 7])
+            print(array)
     Hi()
 
     #From here to
