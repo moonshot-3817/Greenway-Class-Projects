@@ -1,0 +1,68 @@
+import tkinter as tk
+import random
+doggie=tk.Tk()
+doggie.geometry("1000x500")
+doggie.title("Hi")
+listofcolors=("Red", "Blue", "Green", "Orange", "Pink", "Skyblue", "RoyalBlue", "Seagreen1", "Orangered", "Gold",
+              "Chocolate", "Purple3", "Green2", "DeepSkyBlue", "Hotpink", "Gray1", "Gray2", "Gray3", "Brown4", "Deeppink",
+              "Tomato", "Springgreen1", "Springgreen2", "Springgreen3", "Peachpuff4", "Lightseagreen", "Red3", "Red4",
+              "Darkolivegreen")
+choosecolor=random.choice(listofcolors)
+def PinaColada():
+    canvas=tk.Canvas(doggie, bg="Dodgerblue4")
+    canvas.grid(row=4, column=8)
+    checkbox=tk.Checkbutton(doggie, bg="Dodgerblue4")
+    checkbox.grid(row=4, column=9)
+def PinaColada2():
+    entry=tk.Entry(doggie, bg="Dodgerblue3")
+    entry.grid(row=4, column=10)
+    label=tk.Label(doggie, bg="Red")
+    label.grid(row=4, column=11)
+    labelframe=tk.LabelFrame(doggie, bg="Red")
+    labelframe.grid(row=4, column=11)
+def PinaColada5():
+    listbox=tk.Listbox(doggie, bg="Dodgerblue4")
+    listbox.grid(row=4, column=12)
+    menubutton=tk.Menubutton(doggie, bg="Pink")
+    menubutton.grid(row=4, column=13)
+def PinaColada4():
+    scrollbar=tk.Scrollbar(doggie, bg="Gray3")
+    scrollbar.grid(row=4, column=15)
+    text=tk.Text(doggie, bg="Brown")
+    text.grid(row=4, column=16)
+def PinaColada3():
+    spinbox=tk.Spinbox(doggie, bg="Dodgerblue4")
+    spinbox.grid(row=4, column=17)
+    panedwindow=tk.PanedWindow(doggie, bg="Dodgerblue4")
+    panedwindow.grid(row=4, column=18)
+    
+def SLIDERVALUE(event):
+    global choosecolor
+    print(Sliderr.get())
+    choosecolor=random.choice(listofcolors)
+    Button=tk.Button(doggie, bg=choosecolor, height=25, width=20, command=PinaColada)
+    Button.grid(row=0, rowspan=3, column=1)
+    choosecolor=random.choice(listofcolors)
+    Button1=tk.Button(doggie, bg=choosecolor, height=25, width=20, command=PinaColada)
+    Button1.grid(row=0, rowspan=3, column=2)
+    choosecolor=random.choice(listofcolors)
+    Button2=tk.Button(doggie, bg=choosecolor, height=25, width=20, command=PinaColada)
+    Button2.grid(row=0, rowspan=3, column=3)
+    choosecolor=random.choice(listofcolors)
+    Button3=tk.Button(doggie, bg=choosecolor, height=25, width=20,command=PinaColada)
+    Button3.grid(row=0, rowspan=3, column=4)
+    choosecolor=random.choice(listofcolors)
+    Button4=tk.Button(doggie, bg=choosecolor, height=25, width=20,command=PinaColada)
+    Button4.grid(row=0, rowspan=3, column=5)
+    choosecolor=random.choice(listofcolors)
+    Button5=tk.Button(doggie, bg=choosecolor, height=25, width=20,command=PinaColada)
+    Button5.grid(row=0, rowspan=3, column=6)
+
+Sliderr=tk.Scale(doggie, bg="Black", from_=0, to=5, command=SLIDERVALUE)
+Sliderr.grid(row=1, column=7)
+Sliderr.set(0)
+print(Sliderr.get())
+
+
+
+doggie.mainloop()
