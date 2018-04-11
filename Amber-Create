@@ -1,0 +1,65 @@
+from tkinter import *
+window = Tk()
+window.title("Create It Preformance Task")
+window_sizex = 800
+window_sizey = 800
+window.minsize(window_sizex, window_sizey)
+
+money = 500
+gameplay = Canvas (window, bg="Violet", height=window_sizex, width=window_sizey)
+gameplay.place(x=0, y=0)
+money_value = Label(gameplay, text="Coins: " + str(money), bg="skyblue")
+money_value.place(x=window_sizex - 100, y=10)
+
+def mission_one():
+    list = Listbox(gameplay)
+    list.place(x=window_sizex - 300, y=20)
+    list.insert (1, "List: ")
+    list.insert(2, "batteries")
+    list.insert(3, "cardboard")
+    list.insert(4, "popsickle sticks")
+    list.insert(5, "cardboard")
+    list.insert(6, "pencil")
+    list.insert(7, "rolled up paper")
+    list.insert(8, "large toothpicks")
+    list.insert(9, "rubberband")
+    list.insert(10, "wire")
+    list.insert(11, "scissors")
+    list.insert(12, "glue")
+    list.insert(13, "motor")
+    list.insert(14, "switch")
+    list.insert(15, "box cutter")
+    "Would you like to work as a team?"
+    "Yes"
+    "Great, I can get my mom and we can find wire, box cutters, and other materials requiring adult help. Then we can meet up after you find the rest"
+    list.delete (10, END)
+
+def starts():
+    print("hi")
+    shop.place_forget()
+    start.place_forget()
+    instructions.place_forget()
+
+    "You want to do well? Then, you have to work for it. Ready?"
+    "Yes, I want to meet my goals."
+    "No, I don't want to get better."
+
+    "Let's go to the neighborhood where kids are racing their toy cars. You need to build a car in order to join the race. Go look for parts on list."
+    mission_one()
+
+
+
+
+
+start = Button(gameplay, text="Start", command=starts)
+start.place(x=window_sizex/2, y=window_sizey/2)
+instructions = Button(gameplay, text="instructions")
+instructions.place(x=window_sizex/2 + 100, y=window_sizey/2)
+shop = Button(gameplay, text="shop ")
+shop.place(x=window_sizex/2 - 100, y=window_sizey/2)
+
+
+#def mission_two:
+#def mission_three:
+
+window.mainloop()
