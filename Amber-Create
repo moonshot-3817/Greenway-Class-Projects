@@ -1,65 +1,168 @@
-from tkinter import *
-window = Tk()
-window.title("Create It Preformance Task")
-window_sizex = 800
-window_sizey = 800
-window.minsize(window_sizex, window_sizey)
-
-money = 500
-gameplay = Canvas (window, bg="Violet", height=window_sizex, width=window_sizey)
-gameplay.place(x=0, y=0)
-money_value = Label(gameplay, text="Coins: " + str(money), bg="skyblue")
-money_value.place(x=window_sizex - 100, y=10)
-
-def mission_one():
-    list = Listbox(gameplay)
-    list.place(x=window_sizex - 300, y=20)
-    list.insert (1, "List: ")
-    list.insert(2, "batteries")
-    list.insert(3, "cardboard")
-    list.insert(4, "popsickle sticks")
-    list.insert(5, "cardboard")
-    list.insert(6, "pencil")
-    list.insert(7, "rolled up paper")
-    list.insert(8, "large toothpicks")
-    list.insert(9, "rubberband")
-    list.insert(10, "wire")
-    list.insert(11, "scissors")
-    list.insert(12, "glue")
-    list.insert(13, "motor")
-    list.insert(14, "switch")
-    list.insert(15, "box cutter")
-    "Would you like to work as a team?"
-    "Yes"
-    "Great, I can get my mom and we can find wire, box cutters, and other materials requiring adult help. Then we can meet up after you find the rest"
-    list.delete (10, END)
-
-def starts():
-    print("hi")
-    shop.place_forget()
-    start.place_forget()
-    instructions.place_forget()
-
-    "You want to do well? Then, you have to work for it. Ready?"
-    "Yes, I want to meet my goals."
-    "No, I don't want to get better."
-
-    "Let's go to the neighborhood where kids are racing their toy cars. You need to build a car in order to join the race. Go look for parts on list."
-    mission_one()
+import pygame
+import random
+from pygame.locals import *
+pygame.init()
+yscreen=1000
+xscreen=1000
+screen = pygame.display.set_mode((xscreen, yscreen))
+pygame.display.set_caption("Adventure Seeker")
+White = (250, 250, 250)
+Day = (135, 206, 235)
+Night = (25, 25, 112)
+Times=(Day, Night)
+Time=random.choice(Times)
+screen.fill(Time)
+working = True
+yposition = yscreen / 2
+xposition = xscreen / 2
 
 
 
 
+#
+#  samy's weapon choice goes here
+#  upper right corner there is a map, a backpack, pop health, Instructions on how to play, and more.
+#  Press F1 to hide and show right corner images. H to get the stuff, starting with backpack arrows to move?
+def Arrows():
+    global yposition, xposition
+    pressed = pygame.key.get_pressed ()
+    if pressed[pygame.K_DOWN]:
+        yposition=yposition+10
+        print(yposition)
+    if pressed[pygame.K_UP]:
+        yposition=yposition-10
+        print(yposition)
+    if pressed[pygame.K_RIGHT]:
+        xposition=xposition+10
+        print(xposition)
+    if pressed[pygame.K_LEFT]:
+        xposition=xposition-10
+        print (xposition)
+    if pressed[pygame.K_F1]:
+        print("hide righ corner stuff")
+    arrowtomarket=pygame.draw.polygon (screen, White, ((xscreen-30, yscreen/2-5), (xscreen-30, yscreen/2+5), (xscreen-10, yscreen/2+5), (xscreen-10, yscreen/2+15), (xscreen, yscreen/2), (xscreen-10, yscreen/2-15), (
+        xscreen-10, yscreen/2-5)))  # https://stackoverflow.com/questions/14897071/drawing-an-arrow-in-pygame
+    arrowtoforest=pygame.draw.polygon (screen, White, ((0+30, yscreen/2-5), (0+30, yscreen/2+5), (0+10, yscreen/2+5), (0+10, yscreen/2+15), (0, yscreen/2), (0+10, yscreen/2-15), (
+        0+10, yscreen/2-5)))  # https://stackoverflow.com/questions/14897071/drawing-an-arrow-in-pygame
 
-start = Button(gameplay, text="Start", command=starts)
-start.place(x=window_sizex/2, y=window_sizey/2)
-instructions = Button(gameplay, text="instructions")
-instructions.place(x=window_sizex/2 + 100, y=window_sizey/2)
-shop = Button(gameplay, text="shop ")
-shop.place(x=window_sizex/2 - 100, y=window_sizey/2)
 
+    class sprites():
+        image=pygame.image.load("150.png")
+        screen.blit(image,(xposition, yposition))
 
-#def mission_two:
-#def mission_three:
+#  Menu: You can exit game, restart game
+class gameplay():
+    while working == True:
+        pygame.display.update ()
+        for event in pygame.event.get ():
+            if event.type == QUIT:
+                working = False
+                pygame.quit ()
+            if event.type == pygame.KEYDOWN:
+                Arrows()
+    Civilian=("Healer", "Priest", "Warrior #1", "Warrior#2", "Merchant", "Farmer", "Jeweler/Special skills man")  #others?
 
-window.mainloop()
+    global money
+    InventoryEmpty=0
+    InventoryFull=25
+    Inventory=InventoryEmpty
+    money=100 #start currency
+    magiccards = 10
+    population = 30
+    populationhealth = 100
+
+    if Inventory == InventoryFull:
+        print("full")
+        #def "enter bacpack"
+    elif Inventory==InventoryEmpty:
+        print("empty")
+    #def can add items
+    else:
+        print("get rid of this print")
+        #def can add items
+    #import images, then switch these images if click on this button, which will change position of sprite
+
+class Residential():
+    house = 120
+    boughthouse=0  #0 will mean false, 1 means true
+    #if click on house
+    if boughthouse ==0:
+        wantstobuyhouse = input("Would you like to buy house?") #later going to be button press
+        if wantstobuyhouse =="yes":
+            if money>=house:
+                boughthouse=1 # 0 means flase, 1 means true
+                money=money-house
+                print("You have bought a house. You have" +money+ "silver coins left")
+            if money<house:
+                boughthouse=0
+                print("you cannot buy this house. Try to earn some money")
+class MarketPlace():
+    global guidequestion
+    #in begining of game giant arrows lead you a Guide if click on guide:
+    print ("Hello, you must be the guide, I am a adventurer")  #you
+    question2=input("ah, yes I see, you have decided to live in our town to research our lives. Enjoy living here. Would you like instructions on our town?")
+    print("The great adventurer! So good to finally meet you!")
+    if question2=="yes":
+            print("You can find that by clicking on the right hand corner of your screen to view instructions on gameplay.")
+            print("Historians have visited our worlds since before our mighty civilliazation arose. These are travelers"
+                  "from what they say as the 'future'. Many of us originally believed they were messangers of the gods."
+                  "But you historians have denied that, instead requesting to live in secret. So, in exchange for a "
+                  "small fee every so often, we allow "
+                  "historians to live in secret as commoners, so they can research our empires to educate their "
+                  "generation about our endevours. You are unable to interfere with fate, unlike adventurers, and will"
+                  "face the dangers of any commoner, except disease. Good luck.")
+        else:
+            print("Bye")
+
+    #if click on person:
+    changewardrobe=input("Change Wardrobe: New clothes, Change character")
+
+    foregingoods=input("Purchase foreign goods: new foods, better clothes, necessary for task, animals, etc") # ie silk, and ivory
+    Arts=input("Arts: Make pottery, learn dance moves, make art, purchase art, purchase jewlry")
+    Weapon=input("Create weapon")
+    Jobs=input("Jobs: make money slowly,  repeated games to play like educating, or astrologist, or "
+               "defense planner, or baker assistant, or worker assistant or irrigation worker, monement builder. Only to make money")
+
+    Task=input("Tasks:Fast way to make money and get materials,Special rewards and tasks, eventualy will lead you to next world. Will also teach you how to play game")
+    if guidequestion == "historian":
+        print("'Ello. Hear you want some silver coins. Just gotta do some tasks for me")
+    if guidequestion == "adventurer":
+        print("So great to finally meet you! You are the only one able to rescue our town")
+    else:
+        print("I ain't got nothin' for foreign blokes like yourself")
+    if guidequestion == "adventurer":
+        Magic = input ("Magic: helps u defeat evil villian, and keep population healthy, buy more cards,")
+    else:
+        print("Hey, this ain't for you bub. Adventurers only.")
+    Food= input("Food: prepary and purchase food u had in forest, bakery creates treats and etc")
+    Furniture = input("Furniture: that u help create for you house")
+    Religion = input("Relgion: where illness shelter is, population happines inc, witchcraft involvemnt decreases?, can get married, ")
+    Medicine = input("Medicine and Edu: Buy and sell herbs, can buy/take care of animals, learn stuff, write journals, do math?, idk")
+#if move up right left and down. Do so accordingly
+class Jobs():
+    print("First fun game")
+    #after each job, you gain 1000 coins
+    money = money + 1000
+class Resources():
+    print("new scene?")
+    #goes from left to right two dimensional to produce random things like trees, (go down for minerals), find animals,
+    #some evil creatures that attack u if you are adventurer, river, with fish
+    #Resource area--->Forest, river, fields, mines, animals, farms, ocean,: You can find
+# "Silver dollars, but most come from market place.
+
+class War():
+    #3 spaces between you and enemy. spot = random.choice(1,3)
+
+class GovernmentBody():
+    print("new scene?")#government body, war mini-games?, portal to other worlds, major bosses?
+    # Market Place and Battle Grounds? and sickness areas?. Market is where you can earn money or collect items.
+    #  Pottery, will cost clay and 5 silver coins, or some spices and timber
+    # market place, you can get "silk" or items from different world, not available in your forest or etc.
+
+    #if click on portal
+    print("Build completion at "+"%")
+
+    #go to main govt and enlist in war
+    enlist=input("Do you want to fight in war?")
+    if enlist = "yes":
+        class War()
