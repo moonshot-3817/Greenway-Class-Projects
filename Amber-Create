@@ -18,6 +18,7 @@ xposition = xscreen / 2
 setting = "residential"
 boughthouse = 0
 Inventory = ()
+InventoryAmount = len(Inventory)
 money = 100000000000  # start currency
 magiccards = 10
 population = 30
@@ -226,8 +227,14 @@ def makeground():
         arrownohome = pygame.draw.polygon (screen, White, (
             (xscreen /2 - 5, yscreen - 30), (xscreen /2 + 5, yscreen - 30), (xscreen /2 + 5, yscreen - 10), (xscreen /2 + 15, yscreen - 10),
             (xscreen /2 , yscreen), (xscreen /2 - 15, yscreen - 10), (xscreen /2 - 5, yscreen - 10)))
+    if setting == "Job":
+        screen.fill (Time)
+    if setting != "Job":
+        map_icon = pygame.draw.rect(screen, White, (xscreen-65, 10, 50, 50))
+        backpack_icon = pygame.draw.rect(screen, White, (xscreen-125, 10, 50, 50))
+        options_icon = pygame.draw.rect(screen, White, (xscreen-185, 10, 50, 50))
 def click():
-    global setting, boughthouse, money, xscreen, yscreen
+    global setting, boughthouse, money, xscreen, yscreen, Inventory, InventoryAmount
     if setting == "residential":
         avatarhousesize = 400
         if xscreen / 2 + avatarhousesize / 2 > pos[0] > xscreen / 2 - avatarhousesize / 2 and spriteposy + \
@@ -265,7 +272,6 @@ def click():
             setting = "residential"
             makeground ()
     if setting == "marketplace":
-        InventoryAmount = len(Inventory)
         clothesprice = 30
         localprice = 50
         furnitureprice = 200
@@ -296,7 +302,19 @@ def click():
             makeground()
     if setting == "Job":
         print("hmm...")
-
+    if setting != "Job":
+        font = pygame.font.SysFont ('Arial', 25) #https://stackoverflow.com/questions/19117062/how-to-add-text-into-a-pygame-rectangle
+        if xscreen - 65 + 50 > pos[0] > xscreen - 65 and 60 > pos [1] > 10:
+                setting = "weird"
+                map = pygame.draw.rect(screen, White, (100, 100, xscreen - 200, yscreen - 300))
+        if xscreen - 125 + 50 > pos[0] > xscreen - 125 and 60 > pos[1] > 10:
+            setting = "weird"
+            items = pygame.draw.rect(screen, White, (100, 100, xscreen - 200, yscreen - 300))
+            screen.blit(font.render(" Item amount: " + str(InventoryAmount) + " Inventory: " + str(Inventory) +
+                                    " Silver Coins: " + str(money), True, (255, 0, 0)), (200, 100))
+        if xscreen - 185 + 50 > pos[0] > xscreen - 185 and 60 > pos[1] > 10:
+            setting = "weird"
+            options = pygame.draw.rect(screen, White, (100, 100, xscreen - 200, yscreen - 300))
 makeground ()
 
 
@@ -313,4 +331,3 @@ while working == True:
             #a.clickimage()
             pos = pygame.mouse.get_pos ()
             click()
-
