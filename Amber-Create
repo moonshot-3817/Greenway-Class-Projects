@@ -148,7 +148,7 @@ class GovernmentBody():
 """""
 
 def makeground():
-    global setting
+    global setting, xscreen
     if setting == "residential":
         screen.fill (Time)
         House1 = pygame.image.load ("Vanilla Cupcake.png")
@@ -160,7 +160,7 @@ def makeground():
         House4 = pygame.image.load ("Vanilla Cupcake.png")
         screen.blit (House4, (900, 60))
         AvatarHouse = pygame.image.load ("Vanilla Cupcake.png")
-        screen.blit (AvatarHouse, (110, 60))
+        screen.blit (AvatarHouse, (xscreen / 2-100, 10))
         Villager1 = pygame.image.load ("Chocolate Cupcake.png")
         screen.blit (Villager1, (50, 30))
         Villager2 = pygame.image.load ("Chocolate Cupcake.png")
@@ -217,15 +217,20 @@ def makeground():
         screen.blit (Fridge, (20, 390))
         Stove = pygame.image.load ("Chocolate Cupcake.png")
         screen.blit (Stove, (20, 390))
+        arrownothouse = pygame.draw.polygon (screen, White, (
+            (xscreen /2 - 5, yscreen - 30), (xscreen /2 + 5, yscreen - 30), (xscreen /2 + 5, yscreen - 10), (xscreen /2 + 15, yscreen - 10),
+            (xscreen /2 , yscreen), (xscreen /2 - 15, yscreen - 10), (xscreen /2 - 5, yscreen - 10)))
     if setting == "avatarhouse":
         screen.fill (Time)
         Couch = pygame.image.load ("Chocolate Cupcake.png")
+        arrownohome = pygame.draw.polygon (screen, White, (
+            (xscreen /2 - 5, yscreen - 30), (xscreen /2 + 5, yscreen - 30), (xscreen /2 + 5, yscreen - 10), (xscreen /2 + 15, yscreen - 10),
+            (xscreen /2 , yscreen), (xscreen /2 - 15, yscreen - 10), (xscreen /2 - 5, yscreen - 10)))
 def click():
     global setting, boughthouse, money, xscreen, yscreen
     if setting == "residential":
-        avatarhousx = 110
         avatarhousesize = 400
-        if avatarhousx + avatarhousesize / 2 > pos[0] > avatarhousx - avatarhousesize / 2 and spriteposy + \
+        if xscreen / 2 + avatarhousesize / 2 > pos[0] > xscreen / 2 - avatarhousesize / 2 and spriteposy + \
                         avatarhousesize / 2 > pos[1] > spriteposy - avatarhousesize / 2:
             print("HI")
     #def myhousedoor(money, boughthouse): #might conv to global
@@ -237,9 +242,8 @@ def click():
             if boughthouse == 1:
                 setting = "avatarhouse"
                 makeground()
-        if avatarhousx + avatarhousesize / 2 < pos[
-            0] < avatarhousx - avatarhousesize / 2 and spriteposy + avatarhousesize / 2 > pos[
-            1] > spriteposy - avatarhousesize / 2:
+        if (xscreen / 2 + avatarhousesize / 2 < pos[0] or pos[0] <  xscreen / 2 - avatarhousesize / 2) and (spriteposy\
+                + avatarhousesize / 4 > pos[1] > spriteposy - avatarhousesize / 4):
             #enterneighborhouse = input("Would you like to go into your neighbor's house?")
             #if enterneighborhouse=="yes":
                 #print("Go into house.")
@@ -251,11 +255,17 @@ def click():
             makeground()
     if setting == "neighborhouse":
         makeground ()
+        if xscreen / 2 + 15 > pos[0] > xscreen / 2 - 15 and yscreen > pos[1] > yscreen - 30:
+            setting = "residential"
+            makeground ()
+
     if setting == "avatarhouse":
-        print("HI")
         makeground ()
+        if xscreen / 2 + 15 > pos[0] > xscreen / 2 - 15 and yscreen > pos[1] > yscreen - 30:
+            setting = "residential"
+            makeground ()
     if setting == "marketplace":
-        InventoryAmount = len (Inventory)
+        InventoryAmount = len(Inventory)
         clothesprice = 30
         localprice = 50
         furnitureprice = 200
@@ -303,3 +313,4 @@ while working == True:
             #a.clickimage()
             pos = pygame.mouse.get_pos ()
             click()
+
