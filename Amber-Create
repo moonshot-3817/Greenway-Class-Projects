@@ -21,6 +21,7 @@ boughthouse = 0
 Inventory = []
 InventoryAmount = len(Inventory)
 money = 100000000000  # start currency
+Civ_bank = 100000000000
 magiccards = 10
 population = 30
 populationhealth = 100
@@ -28,7 +29,9 @@ boughthouse = 0  # 0 will mean false, 1 means true
 pos = (-1, -2)
 spritework=0
 mainavatar = pygame.image.load ("Vanilla Cupcake.png")
-war = "No"
+war = "Not in War"
+warswon = 0
+warslost = 0
 def Arrows():
     global yposition, xposition
     pressed = pygame.key.get_pressed ()
@@ -149,6 +152,29 @@ class GovernmentBody():
 
         #bind(<Button-1>, )
 """""
+def War():
+    Enemies = ["Ottoman Empire", "China", "West Europe", "Byzantines", "Incas"]
+    Enemy = random.choice(Enemies)
+    EnemyPower = random.randint(1, 100)
+    EnemyHealth = 1000 + EnemyPower
+    EnemyAttack = 100 + EnemyPower
+    YourAdvantage = 50 - EnemyPower
+    YourHealth = 1000 + YourAdvantage
+    YourAttack = 100 + YourAdvantage
+
+def AllGOVVARIABLES():
+    # type of religious belief
+    # if in war
+    #type of government
+    govtypes = ["Oligarchy", "Republic", "Monarchy", "Democracy", "Dictatorship", "Communism", "Anarchy", "Theocracy"]
+    #amount of money govern has, sub in war or when corrupt
+    #whether govt takes foreign money --> local market closed, foriegn price down and GOVT BCM CORRUPT
+    corrupt = 0 #0 = not corrupt
+    #Corrupt or not
+    #population size, and pop health
+    #rebellions - if gov too corrupt, gov type is same for too long, lost war
+
+
 
 def makeground():
     global setting, xscreen, oldsetting
@@ -185,7 +211,7 @@ def makeground():
         arrowtomarket = pygame.draw.polygon (screen, White, (
             (xscreen - 30, yscreen / 2 - 5), (xscreen - 30, yscreen / 2 + 5), (xscreen - 10, yscreen / 2 + 5),
             (xscreen - 10, yscreen / 2 + 15), (xscreen, yscreen / 2), (xscreen - 10, yscreen / 2 - 15), (xscreen - 10,
-                    yscreen / 2 - 5)))  # https://stackoverflow.com/questions/14897071/drawing-an-arrow-in-pygame
+                                                                                                         yscreen / 2 - 5)))  # https://stackoverflow.com/questions/14897071/drawing-an-arrow-in-pygame
         arrowtogov = pygame.draw.polygon (screen, White, (
             (0 + 30, yscreen / 2 - 5), (0 + 30, yscreen / 2 + 5), (0 + 10, yscreen / 2 + 5), (0 + 10, yscreen / 2 + 15),
             (0, yscreen / 2), (0 + 10, yscreen / 2 - 15), (0 + 10, yscreen / 2 - 5)))
@@ -195,6 +221,8 @@ def makeground():
             (xscreen - 30, yscreen / 2 - 5), (xscreen - 30, yscreen / 2 + 5), (xscreen - 10, yscreen / 2 + 5),
             (xscreen - 10, yscreen / 2 + 15), (xscreen, yscreen / 2), (xscreen - 10, yscreen / 2 - 15), (xscreen - 10,
                                                                                                          yscreen / 2 - 5)))  # https://stackoverflow.com/questions/14897071/drawing-an-arrow-in-pygame
+        Escape = pygame.draw.rect (screen, Red, (110, 110, 50, 50))
+        screen.blit(font.render("Declare War"), True, White, (110, 110))
     if setting == "marketplace":
         screen.fill (Time)
         Guide = pygame.image.load ("market.png")
@@ -273,6 +301,7 @@ def click():
         if 30 > pos[0] > 0 and yscreen / 2 + 15 > pos[1] > yscreen / 2 - 15:
             setting = "government"
             makeground()
+            screen.blit(font.render("Government Body", True, (50, 255, 100)), (xscreen / 2 - 300, yscreen / 2 - 200))
     if setting == "neighborhouse":
         makeground ()
         if xscreen / 2 + 15 > pos[0] > xscreen / 2 - 15 and yscreen > pos[1] > yscreen - 30:
@@ -283,6 +312,9 @@ def click():
         if xscreen > pos[0] > xscreen - 30 and yscreen / 2 + 15 > pos[1] > yscreen / 2 - 15:
             setting = "residential"
             makeground()
+        if 110 + 50 > pos[0] > 110 and 110 + 50 > pos[1] > 110:
+            war = "Declared War"
+
     if setting == "avatarhouse":
         makeground ()
         if xscreen / 2 + 15 > pos[0] > xscreen / 2 - 15 and yscreen > pos[1] > yscreen - 30:
@@ -340,7 +372,8 @@ def click():
                                     " Silver Coins: " + str(money), True, (255, 0, 0)), (200, 300))
         if xscreen - 245 + 50 > pos[0] > xscreen - 245 and 60 > pos[1] > 10:
             screen.blit(font.render("Civilization Status", True, (255, 0, 0)), (200, 100))
-            screen.blit(font.render("In war:" + str(war), True, (255, 0, 0)), (300, 300))
+            screen.blit(font.render("In war:" + str(war) + "Wars won: " + warswon + "Wars lost: " + warslost, True, (255, 0, 0)), (300, 300))
+
         if xscreen - 245 + 50 > pos[0] > xscreen - 245 and 60 > pos[1] > 10:
             print("options")
         if 110 + 30 > pos[0] > 110 and 110 + 30 > pos[1] > 110:
