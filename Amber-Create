@@ -154,32 +154,34 @@ def makeground():
     global setting, xscreen, oldsetting
     if setting == "residential":
         screen.fill (Time)
-        House1 = pygame.image.load ("Vanilla Cupcake.png")
-        screen.blit (House1, (spriteposx, spriteposy))
-        House2 = pygame.image.load ("Vanilla Cupcake.png")
-        screen.blit (House2, (300, 60))
-        House3 = pygame.image.load ("Vanilla Cupcake.png")
-        screen.blit (House3, (700, 60))
-        House4 = pygame.image.load ("Vanilla Cupcake.png")
-        screen.blit (House4, (900, 60))
-        AvatarHouse = pygame.image.load ("Vanilla Cupcake.png")
-        screen.blit (AvatarHouse, (xscreen / 2-100, 10))
-        Villager1 = pygame.image.load ("Chocolate Cupcake.png")
-        screen.blit (Villager1, (50, 30))
-        Villager2 = pygame.image.load ("Chocolate Cupcake.png")
-        screen.blit (Villager2, (50, 20))
-        Villager3 = pygame.image.load ("Chocolate Cupcake.png")
-        screen.blit (Villager3, (50, 100))
-        Villager4 = pygame.image.load ("Chocolate Cupcake.png")
+        House1 = pygame.image.load ("houseblue.png")
+        screen.blit (House1, (xscreen / 6 - 200, 60))
+        House2 = pygame.image.load ("houseblue.png")
+        screen.blit (House2, (xscreen * 2 / 6 - 200, 60))
+        House3 = pygame.image.load ("houseblue.png")
+        screen.blit (House3, (xscreen * 5 / 6 - 200, 60))
+        House4 = pygame.image.load ("houseblue.png")
+        screen.blit (House4, (xscreen * 4 / 6 - 200, 60))
+        AvatarHouse = pygame.image.load ("houseblue.png")
+        screen.blit (AvatarHouse, (xscreen * 3 / 6 - 200, 60))
+        """""""""
+        Villager1 = pygame.image.load ("HouseIcon.png")
+        screen.blit (Villager1, (50, 200))
+        Villager2 = pygame.image.load ("HouseIcon.png")
+        screen.blit (Villager2, (50, 400))
+        Villager3 = pygame.image.load ("HouseIcon.png")
+        screen.blit (Villager3, (50, 300))
+        Villager4 = pygame.image.load ("HouseIcon.png")
         screen.blit (Villager4, (50, 600))
-        Villager5 = pygame.image.load ("Chocolate Cupcake.png")
+        Villager5 = pygame.image.load ("HouseIcon.png")
         screen.blit (Villager5, (50, 200))
-        Villager6 = pygame.image.load ("Chocolate Cupcake.png")
-        screen.blit (Villager6, (50, 160))
-        Villager7 = pygame.image.load ("Chocolate Cupcake.png")
+        Villager6 = pygame.image.load ("HouseIcon.png")
+        screen.blit (Villager6, (50, 300))
+        Villager7 = pygame.image.load ("HouseIcon.png")
         screen.blit (Villager7, (50, 260))
-        Villager8 = pygame.image.load ("Chocolate Cupcake.png")
+        Villager8 = pygame.image.load ("HouseIcon.png")
         screen.blit (Villager8, (50, 630))
+        """
         arrowtomarket = pygame.draw.polygon (screen, White, (
             (xscreen - 30, yscreen / 2 - 5), (xscreen - 30, yscreen / 2 + 5), (xscreen - 10, yscreen / 2 + 5),
             (xscreen - 10, yscreen / 2 + 15), (xscreen, yscreen / 2), (xscreen - 10, yscreen / 2 - 15), (xscreen - 10,
@@ -195,22 +197,20 @@ def makeground():
                                                                                                          yscreen / 2 - 5)))  # https://stackoverflow.com/questions/14897071/drawing-an-arrow-in-pygame
     if setting == "marketplace":
         screen.fill (Time)
-        Guide = pygame.image.load ("Chocolate Cupcake.png")
-        screen.blit (Guide, (xscreen-400, 5))
-        Furniture = pygame.image.load ("Chocolate Cupcake.png")
-        screen.blit (Furniture, (xscreen-400, 200))
-        Foreigngoods = pygame.image.load ("Chocolate Cupcake.png")
-        screen.blit (Foreigngoods, (xscreen-400, 300))
-        arts = pygame.image.load ("Chocolate Cupcake.png")
-        screen.blit (arts, (xscreen-400, 400))
-        tools = pygame.image.load ("Chocolate Cupcake.png")
-        screen.blit (tools, (xscreen-400, 500))
-        jobs = pygame.image.load ("Chocolate Cupcake.png")
-        screen.blit (jobs, (xscreen-400, 600))
-        localgoods = pygame.image.load ("Chocolate Cupcake.png")
+        Guide = pygame.image.load ("market.png")
+        screen.blit (Guide, (xscreen-300, 5))
+        Furniture = pygame.image.load ("market.png")
+        screen.blit (Furniture, (xscreen-300, 200))
+        Foreigngoods = pygame.image.load ("market.png")
+        screen.blit (Foreigngoods, (xscreen-300, 400))
+        arts = pygame.image.load ("market.png")
+        screen.blit (arts, (xscreen-300, 600))
+        tools = pygame.image.load ("market.png")
+        screen.blit (tools, (xscreen-300, 800))
+        localgoods = pygame.image.load ("market.png")
         screen.blit (localgoods, (0, 5))
-        clothes = pygame.image.load ("Chocolate Cupcake.png")
-        screen.blit (clothes, (0, 500))
+        clothes = pygame.image.load ("market.png")
+        screen.blit (clothes, (0, yscreen-280))
         arrowtoresident = pygame.draw.polygon (screen, White, (
             (0 + 30, yscreen / 2 - 5), (0 + 30, yscreen / 2 + 5), (0 + 10, yscreen / 2 + 5), (0 + 10, yscreen / 2 + 15),
             (0, yscreen / 2), (0 + 10, yscreen / 2 - 15), (0 + 10, yscreen / 2 - 5)))
@@ -250,9 +250,7 @@ def makeground():
 def click():
     global setting, boughthouse, money, xscreen, yscreen, Inventory, InventoryAmount, oldsetting, war
     if setting == "residential":
-        avatarhousesize = 400
-        if xscreen / 2 + avatarhousesize / 2 > pos[0] > xscreen / 2 - avatarhousesize / 2 and spriteposy + \
-                avatarhousesize / 2 > pos[1] > spriteposy - avatarhousesize / 2:
+        if xscreen * 3 / 6 + 75> pos[0] > xscreen * 3 / 6 - 75 and 280 > pos[1] > 100:
             #def myhousedoor(money, boughthouse): #might conv to global
             house = 1200
             if boughthouse == 0 and money>=house:
@@ -262,8 +260,7 @@ def click():
             if boughthouse == 1:
                 setting = "avatarhouse"
                 makeground()
-        if (xscreen / 2 + avatarhousesize / 2 < pos[0] or pos[0] <  xscreen / 2 - avatarhousesize / 2) and (spriteposy \
-                                                                                                            + avatarhousesize / 4 > pos[1] > spriteposy - avatarhousesize / 4):
+        if (xscreen * 3 / 6 + 75  < pos[0] or pos[0] <xscreen * 3 / 6 - 75 ) and (280 > pos[1] > 100):
             #enterneighborhouse = input("Would you like to go into your neighbor's house?")
             #if enterneighborhouse=="yes":
             #print("Go into house.")
@@ -307,13 +304,13 @@ def click():
         if InventoryAmount < 10:
             if xscreen - 50 > pos[0] > xscreen - 400 and yscreen > pos[1] > 150 and money > furnitureprice:
                 money = money - furnitureprice
-                Inventory.apend("bed")
+                Inventory.append("bed")
             if xscreen - 50 > pos[0] > xscreen - 400 and yscreen > pos[1] > 150 and money > localprice:
                 money = money - localprice
-                Inventory.apend("bed")
+                Inventory.append("bed")
             if xscreen - 50 > pos[0] > xscreen - 400 and yscreen > pos[1] > 150 and money > Foreignprice:
                 money = money - Foreignprice
-                Inventory.add("bed")
+                Inventory.append("bed")
         else:
             Inventory.remove(9)
             print("gone")
