@@ -1,5 +1,6 @@
 import pygame
 import random
+import time
 from pygame.locals import *
 pygame.init()
 yscreen=1000
@@ -34,7 +35,28 @@ warswon = 0
 warslost = 0
 cost = 0
 militarypower = 0
-govtype = "Oligarchy"
+ball_x = 0
+ball_y = 0
+govs = ["Oligarchy", "Republic", "Monarchy", "Democracy", "Dictatorship", "Communism", "Anarchy", "Theocracy"]
+govtype = random.choice(govs)
+
+def magicalpower():
+    global ball_y, ball_x, weapony, weaponx, money, reveal_weapon, limit_magic
+    limit_magic = limit_magic - 1
+    while limit_magic >0 and ball_y >= 1 or (ball_y != weapony and ball_x != weaponx):
+        time.clock()
+        ball_y = ball_y + 10
+        ball_x = ball_x + 10
+    if ball_x == weapony and ball_y == weapony:
+        money = money + 1
+        reveal_weapon = 0
+    if ball_y <= 0:
+        limit_magic = limit_magic + 1
+        #remove appearance of ball
+    #have the blacksmith ball move up until touch
+
+
+
 def Arrows():
     global yposition, xposition
     pressed = pygame.key.get_pressed ()
@@ -53,6 +75,11 @@ def Arrows():
     if pressed[pygame.K_F1]:
         print("hide right corner stuff")
     screen.blit (mainavatar, (xposition, yposition))
+    if setting == "Job":
+        if pressed[pygame.K_SPACE]:
+            ball_x = xposition
+            ball_y = yscreen - 30
+            magicalpower()
 
 
 
@@ -60,7 +87,7 @@ def Arrows():
 #global money, Inventory, InventoryAmount, boughthouse, setting, boughthouse, money
 #Residents
 #global House1, House2, House3, House4, Villager1, Villager2, Villager3, Villager4, Villager5, Villager6, Villager7
-#global Villager8, AvatarHouse, spriteposx, spriteposy, Guide, Furniture, Foreigngoods, arts, tools, jobs, localgoods, clothes
+#global Villager8, AvatarHouse, spriteposx, spriteposy, Guide, Furniture, Foreigngoods, arts, tools, , localgoods, clothes
 """""""""
 
 """""
@@ -69,7 +96,7 @@ spriteposy=60
 """""""""
 #myhouse
 
-#Jobs
+
 
 MarketPlacePerson= ("Healer", "Ill", "Priest", "Warrior #1", "Warrior#2", "Merchant", "Farmer", "Skills man", "Cooker", "Guide")
 VillageResidentsFemale=("Cybil", "Aurélie", "Anouk", "Saskia", "Tana")
@@ -83,7 +110,7 @@ class MarketPlace():
     global guidequestion
     #in begining of game giant arrows lead you a Guide if click on guide:
     guidequestion=input("Hello, you must be the guide, 1.I am a historian, 2.I am a adventurer 3.Neither")  #you
-    print("You may talk to me and change your job of "+guidequestion+" anytime.")
+    print("You may talk to me and change your work of "+guidequestion+" anytime.")
     if guidequestion=="historian":
         question2=input("ah, yes I see, you have decided to live in our town to research our lives. Enjoy living here. Would you like instructions on our town?")
         if question2=="yes":
@@ -108,7 +135,7 @@ class MarketPlace():
     foregingoods=input("Purchase foreign goods: new foods, better clothes, necessary for task, animals, etc") # ie silk, and ivory
     Arts=input("Arts: Make pottery, learn dance moves, make art, purchase art, purchase jewlry")
     Weapon=input("Create weapon")
-    Jobs=input("Jobs: make money slowly,  repeated games to play like educating, or astrologist, or "
+    work=input("work: make money slowly,  repeated games to play like educating, or astrologist, or "
           "defense planner, or baker assistant, or worker assistant or irrigation worker, monement builder. Only to make money")
 
     Task=input("Tasks:Fast way to make money and get materials,Special rewards and tasks, eventualy will lead you to next world. Will also teach you how to play game")
@@ -170,6 +197,10 @@ def War():
     if YourHealth >= 0 and EnemyHealth <= 0:
         warswon = warswon + 1
 
+
+
+
+
 def AllGOVVARIABLES():
     global govtypes
     # type of religious belief
@@ -183,7 +214,6 @@ def AllGOVVARIABLES():
     #population size, and pop health
     #rebellions - if gov too corrupt, gov type is same for too long, lost war
 
-#def Jobs():
 
 def makeground():
     global setting, xscreen, oldsetting, font, govtype
@@ -287,8 +317,30 @@ def makeground():
         backpack_icon = pygame.draw.rect(screen, White, (xscreen-125, 10, 50, 50))
         options_icon = pygame.draw.rect(screen, White, (xscreen-185, 10, 50, 50))
         civilization_icon = pygame.draw.rect(screen, White, (xscreen-245, 10, 50, 50))
+def Job():
+    global money, marketplace
+    print(" Blacksmith,")
+    reveal_coin = 1
+    reveal_weapon = 1
+    lives = 3
+    if reveal_coin == 0:
+        coin_posx = random.randint(1, xscreen)
+        coin_posy = random.randint(1, yscreen)
+    if reveal_weapon == 0:
+        weaponx = random.randint(1, xscreen)
+        weapony = random.randint(1, yscreen)
+    pygame.draw.rect (screen, Red, (xposition, yposition, 30, 30))
+    if xposition == coin_posx and yposition == coin_posy and reveal_coin == 0:
+        money = money + 10
+    if xposition == weaponx and yposition == weapony and reveal_weapon == 0:
+        lives = lives - 1
+    if lives <=0:
+        
+        time.wait(1)
+        setting = "marketplace"
+        makeground()
 def click():
-    global setting, boughthouse, money, xscreen, yscreen, Inventory, InventoryAmount, oldsetting, war, civ_bank
+    global setting, boughthouse, money, xscreen, yscreen, Inventory, InventoryAmount, oldsetting, war, civ_bank, limit_magic
     if setting == "residential":
         if xscreen * 3 / 6 + 75> pos[0] > xscreen * 3 / 6 - 75 and 280 > pos[1] > 100:
             #def myhousedoor(money, boughthouse): #might conv to global
@@ -377,25 +429,24 @@ def click():
                     True, (255, 0, 0)), (0, 300))
             if quotes == 3:
                 screen.blit (font.render (
-                    "Communism is not love. Communism is a hammer which we  use to crush the enemy.- Mao Zedong. Take a hammer",
+                    "Communism is not love. Communism is a hammer which we use to crush the enemy.- Mao Zedong. Take a hammer",
                     True, (255, 0, 0)), (0, 300))
                 Inventory.append("hammer")
             if pos[0] < xscreen - 30:
                 setting = "residential"
                 makeground()
-
     if setting == "Job":
         print("hmm...")
         unemployment = random.randint(1, 10)
         if unemployment != 1 or govtype != "anarchy" or govtype != "communism":
+            limit_magic = 3
+            makeground()
             Job()
         else:
             screen.blit (font.render ("Oh no, you can't work.", True, (255, 0, 0)), (200, 300))
-
-
     if setting != "Job":
         if xscreen - 65 + 50 > pos[0] > xscreen - 65 and 60 > pos [1] > 10 or xscreen - 125 + 50 > pos[0] > \
-                xscreen - 125 and 60 > pos[1] > 10 or xscreen - 185 + 50 > pos[0] > xscreen - 185 and 60 > pos[1] > 10\
+                xscreen - 125 and 60 > pos[1] > 10 or xscreen - 185 + 50 > pos[0] > xscreen - 185 and 60 > pos[1] > 10 \
                 or xscreen - 245 + 50 > pos[0] > xscreen - 245 and 60 > pos[1] > 10:
             setting = "weird"
             pygame.draw.rect(screen, White, (100, 100, xscreen - 200, yscreen - 300))
@@ -438,4 +489,4 @@ while working == True:
             pos = pygame.mouse.get_pos ()
             click()
 
-#https://openclipart.org/detail/29102/blue-sofa
+    #https://openclipart.org/detail/29102/blue-sofa
