@@ -184,20 +184,27 @@ class GovernmentBody():
 """""
 def War():
     global warslost, warswon, militarypower
-    Enemies = ["Ottoman Empire", "China", "West Europe", "Byzantines", "Incas"]
-    Enemy = random.choice(Enemies)
-    EnemyPower = random.randint(1, 100)
-    EnemyHealth = 1000 + EnemyPower
-    EnemyAttack = 100 + EnemyPower
-    YourAdvantage = militarypower - EnemyPower
-    YourHealth = 1000 + YourAdvantage
-    YourAttack = 100 + YourAdvantage
+    if war == "Declared":
+        Enemies = ["Ottoman Empire", "China", "West Europe", "Byzantines", "Incas"]
+        Enemy = random.choice(Enemies)
+        EnemyPower = random.randint(1, 100)
+        EnemyHealth = 1000 + EnemyPower
+        YourAdvantage = militarypower - EnemyPower
+        YourHealth = 1000 + YourAdvantage
+        EnemyAttack = 100 + EnemyPower
+        YourAttack = 100 + YourAdvantage
+        war = "In progress"
+    if war == "In progress":
+        if (xscreen * 3 / 6 + 75  < pos[0] or pos[0] <xscreen * 3 / 6 - 75 ) and (280 > pos[1] > 100):
+            EnemyHealth = EnemyHealth - YourAttack
+            YourHealth = YourHealth - EnemyAttack
+            
     if YourHealth <= 0 and EnemyHealth>=0:
         warslost = warslost + 1
+        war = "Lost"
     if YourHealth >= 0 and EnemyHealth <= 0:
         warswon = warswon + 1
-
-
+        war = "Won"
 
 
 
@@ -383,7 +390,6 @@ def click():
         if 110 + 50 > pos[0] > 110 and 110 + 50 > pos[1] > 110:
             war = "Declared"
             War()
-
     if setting == "avatarhouse":
         makeground ()
         if xscreen / 2 + 15 > pos[0] > xscreen / 2 - 15 and yscreen > pos[1] > yscreen - 30:
@@ -396,23 +402,37 @@ def click():
             furnitureprice = 200
             Foreignprice = 75
             artprice = 20
-            if setting == "marketplace" and 30 > pos[0] > 0 and yscreen / 2 + 15 > pos[1] > yscreen / 2 - 15:
+            if setting == "marketplace" and 30 > pos[0] > 5 and yscreen / 2 + 15 > pos[1] > yscreen / 2 - 15:
                 setting = "residential"
                 makeground()
-            if xscreen - 50 > pos[0] > xscreen - 400 and yscreen > pos[1] > 150 and money > clothesprice:
+                  Guide = pygame.image.load ("market.png")
+            screen.blit (Guide, (xscreen-300, 5))
+            Furniture = pygame.image.load ("market.png")
+            screen.blit (Furniture, (xscreen-300, 200))
+            Foreigngoods = pygame.image.load ("market.png")
+            screen.blit (Foreigngoods, (xscreen-300, 400))
+            arts = pygame.image.load ("market.png")
+            screen.blit (arts, (xscreen-300, 600))
+            tools = pygame.image.load ("market.png")
+            screen.blit (tools, (xscreen-300, 800))
+            localgoods = pygame.image.load ("market.png")
+            screen.blit (localgoods, (0, 5))
+            clothes = pygame.image.load ("market.png")
+            screen.blit (clothes, (0, yscreen-280))
+            if 250 > pos[0] > 0 and yscreen > pos[1] > 150 and money > clothesprice:
                 money = money - clothesprice
-            if xscreen - 50 > pos[0] > xscreen - 400 and yscreen > pos[1] > 150 and money > artprice:
+            if 250 > pos[0] > 0 and yscreen > pos[1] > 150 and money > artprice:
                 money = money - artprice
             if InventoryAmount < 10:
-                if xscreen - 50 > pos[0] > xscreen - 400 and yscreen > pos[1] > 150 and money > furnitureprice:
+                if xscreen - 50 > pos[0] > xscreen - 300 and 350 > pos[1] > 200 and money > furnitureprice:
                     money = money - furnitureprice
                     Inventory.append("bed")
-                if xscreen - 50 > pos[0] > xscreen - 400 and yscreen > pos[1] > 150 and money > localprice:
+                if xscreen - 50 > pos[0] > xscreen - 300 and yscreen > pos[1] > 150 and money > localprice:
                     money = money - localprice
-                    Inventory.append("bed")
-                if xscreen - 50 > pos[0] > xscreen - 400 and yscreen > pos[1] > 150 and money > Foreignprice:
+                    Inventory.append("cookie")
+                if xscreen - 50 > pos[0] > xscreen - 300 and yscreen > pos[1] > 150 and money > Foreignprice:
                     money = money - Foreignprice
-                    Inventory.append("bed")
+                    Inventory.append("Cinnamon")
             else:
                 Inventory.remove(9)
                 print ("gone")
@@ -461,6 +481,7 @@ def click():
             screen.blit(font.render("Government Body", True, (50, 255, 100)), (xscreen / 2 - 300, yscreen / 2 - 200))
         if xscreen - 125 + 50 > pos[0] > xscreen - 125 and 60 > pos[1] > 10:
             screen.blit(font.render("Inventory", True, (255, 0, 0)), (400, 100))
+            #REMEMBER TO INSERT THE INVENTORY THING FROM HOME
             screen.blit(font.render(" Item amount: " + str(InventoryAmount) + " Inventory: " + str(Inventory) +
                                     " Silver Coins: " + str(money), True, (255, 0, 0)), (200, 300))
         if xscreen - 245 + 50 > pos[0] > xscreen - 245 and 60 > pos[1] > 10:
