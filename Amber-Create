@@ -402,7 +402,7 @@ def click():
             furnitureprice = 200
             Foreignprice = 75
             artprice = 20
-            if setting == "marketplace" and 30 > pos[0] > 5 and yscreen / 2 + 15 > pos[1] > yscreen / 2 - 15:
+            if setting == "marketplace" and 30 > pos[0] > 0 and yscreen / 2 + 15 > pos[1] > yscreen / 2 - 15:
                 setting = "residential"
                 makeground()
                   Guide = pygame.image.load ("market.png")
