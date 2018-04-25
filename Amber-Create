@@ -20,10 +20,11 @@ setting = "residential"
 boughthouse = 0
 Inventory = []
 InventoryAmount = len(Inventory)
-money = 100000000000  # start currency
+money = 100  # start currency
 civ_bank = 100000000000
 population = 30
-yspeed = 10
+yspeed = 6
+space_press = 0
 populationhealth = 100
 boughthouse = 0  # 0 will mean false, 1 means true
 pos = (-1, -2)
@@ -44,22 +45,12 @@ militarypower = 0
 ball_x = 0
 ball_y = 0
 govs = ["Oligarchy", "Republic", "Monarchy", "Democracy", "Dictatorship", "Communism", "Anarchy", "Theocracy"]
+Enemy = "None "
 govtype = random.choice(govs)
 
-def magicalpower():
-    global ball_y, ball_x, weapony, weaponx, money, reveal_weapon, limit_magic
-    magic = pygame.image.load ("houseblue.png")
-    screen.blit (magic, (ball_x, ball_y))
-    limit_magic = limit_magic - 1
-    if ball_x == weapony and ball_y == weapony:
-        money = money + 1
-        reveal_weapon = 0
-    if ball_y <= 0:
-        limit_magic = limit_magic + 1
-        #remove appearance of ball
-    #have the blacksmith ball move up until touch
+
 def Arrows():
-    global yposition, xposition, Time, ball_y, ball_x
+    global yposition, xposition, Time, ball_y, ball_x, space_press
     pressed = pygame.key.get_pressed ()
     if pressed[pygame.K_DOWN]:
         yposition=yposition+10
@@ -70,32 +61,21 @@ def Arrows():
     if pressed[pygame.K_LEFT]:
         xposition=xposition-10
     makeground()
-    screen.blit (mainavatar, (xposition, yposition))
+    screen.blit(mainavatar, (xposition, yposition))
     if pressed[pygame.K_SPACE]:
-            ball_x = xposition
-            ball_y = yscreen - 30
-            magicalpower()
+        ball_x = xposition
+        ball_y = yposition
+        space_press = 1
 
 spriteposx=50
 spriteposy=60
 
 def War():
-    global warslost, warswon, militarypower,war
-    if war == "Declared":
-        Enemies = ["Ottoman Empire", "China", "West Europe", "Byzantines", "Incas"]
-        Enemy = random.choice(Enemies)
-        EnemyPower = random.randint (1, 100)
-        EnemyHealth = 1000 + EnemyPower
-        YourAdvantage = militarypower - EnemyPower
-        YourHealth = 1000 + YourAdvantage
-        EnemyAttack = 100 + EnemyPower
-        YourAttack = 100 + YourAdvantage
+    global warslost, warswon, militarypower, war, EnemyHealth, YourAttack, YourHealth, EnemyAttack
+    if 400 + 100 > pos[0] > 100 and 400 + 100 > pos[1] > 100:
         war = "In progress"
-    if war == "In progress":
-        if (xscreen * 3 / 6 + 75 < pos[0] or pos[0] < xscreen * 3 / 6 - 75) and (280 > pos[1] > 100):
-            EnemyHealth = EnemyHealth - YourAttack
-            YourHealth = YourHealth - EnemyAttack
-
+    EnemyHealth = EnemyHealth - YourAttack
+    YourHealth = YourHealth - EnemyAttack
     if YourHealth <= 0 and EnemyHealth >= 0:
         warslost = warslost + 1
         war = "Lost"
@@ -104,7 +84,7 @@ def War():
         war = "Won"
 
 def makeground():
-    global setting, xscreen, oldsetting, font, govtype
+    global setting, xscreen, oldsetting, font, govtype, magic, lives
     font = pygame.font.SysFont ('Arial',
                                 25)  # https://stackoverflow.com/questions/19117062/how-to-add-text-into-a-pygame-rectangle
     if setting == "residential":
@@ -150,25 +130,28 @@ def makeground():
             (xscreen - 30, yscreen / 2 - 5), (xscreen - 30, yscreen / 2 + 5), (xscreen - 10, yscreen / 2 + 5),
             (xscreen - 10, yscreen / 2 + 15), (xscreen, yscreen / 2), (xscreen - 10, yscreen / 2 - 15), (xscreen - 10,
                                                                                                          yscreen / 2 - 5)))  # https://stackoverflow.com/questions/14897071/drawing-an-arrow-in-pygame
-        Escape = pygame.draw.rect (screen, Red, (110, 110, 50, 50))
+        Initwar = pygame.draw.rect (screen, Red, (110, 110, 120, 50))
         screen.blit(font.render("Declare War", True, White), (110, 110))
+        if war == "In progress":
+            Attack = pygame.draw.rect(screen, (0, 50, 100), (400, 300, 400, 400))
+            screen.blit(font.render("Attack", True, White), (400, 400))
     if setting == "marketplace":
         if govtype != "communism":
-            screen.fill (Time)
-            localgoods = pygame.image.load ("market.png")
-            screen.blit (localgoods, (xscreen-300, 5))
-            Furniture = pygame.image.load ("market.png")
-            screen.blit (Furniture, (xscreen-300, 200))
+            screen.fill(Time)
+            localgoods = pygame.image.load("market.png")
+            screen.blit(localgoods, (xscreen-300, 5))
+            Furniture = pygame.image.load("market.png")
+            screen.blit(Furniture, (xscreen-300, 200))
             Foreigngoods = pygame.image.load ("market.png")
-            screen.blit (Foreigngoods, (xscreen-300, 400))
-            arts = pygame.image.load ("market.png")
+            screen.blit(Foreigngoods, (xscreen-300, 400))
+            arts = pygame.image.load("market.png")
             screen.blit (arts, (xscreen-300, 600))
-            tools = pygame.image.load ("market.png")
+            tools = pygame.image.load("market.png")
             screen.blit (tools, (xscreen-300, 800))
-            Guide = pygame.image.load ("market.png")
-            screen.blit (Guide, (0, 5))
-            clothes = pygame.image.load ("market.png")
-            screen.blit (clothes, (0, yscreen-280))
+            Guide = pygame.image.load("market.png")
+            screen.blit(Guide, (0, 5))
+            clothes = pygame.image.load("market.png")
+            screen.blit(clothes, (0, yscreen-280))
             arrowtoresident = pygame.draw.polygon (screen, White, (
                 (0 + 30, yscreen / 2 - 5), (0 + 30, yscreen / 2 + 5), (0 + 10, yscreen / 2 + 5), (0 + 10, yscreen / 2 + 15),
                 (0, yscreen / 2), (0 + 10, yscreen / 2 - 15), (0 + 10, yscreen / 2 - 5)))
@@ -176,23 +159,23 @@ def makeground():
             Work = pygame.draw.rect (screen, White, (xscreen / 2 - 15, yscreen - 30, 70, 30))
     if setting == "neighborhouse":
         screen.fill (Time)
-        couch = pygame.image.load ("Couch.png")
-        screen.blit (couch, (100, 50))
-        screen.blit (couch, (xscreen-400, 50))
-        table = pygame.image.load ("Table.png")
-        screen.blit (table, (xscreen /2 - 100, 300))
-        fireplace = pygame.image.load ("Fireplace.png")
-        screen.blit (fireplace, (yscreen - 300, yscreen - 300))
-        carpet = pygame.image.load ("Carpet.png")
-        screen.blit (carpet, (xscreen / 2 - 150, yscreen-300))
-        chest = pygame.image.load ("Chest.png")
-        screen.blit (chest, (20, yscreen-300))
+        couch = pygame.image.load("Couch.png")
+        screen.blit(couch, (100, 50))
+        screen.blit(couch, (xscreen-400, 50))
+        table = pygame.image.load("Table.png")
+        screen.blit(table, (xscreen /2 - 100, 300))
+        fireplace = pygame.image.load("Fireplace.png")
+        screen.blit(fireplace, (yscreen - 300, yscreen - 300))
+        carpet = pygame.image.load("Carpet.png")
+        screen.blit(carpet, (xscreen / 2 - 150, yscreen-300))
+        chest = pygame.image.load("Chest.png")
+        screen.blit(chest, (20, yscreen-300))
         arrownothouse = pygame.draw.polygon (screen, White, (
             (xscreen /2 - 5, yscreen - 30), (xscreen /2 + 5, yscreen - 30), (xscreen /2 + 5, yscreen - 10), (xscreen /2 + 15, yscreen - 10),
             (xscreen /2 , yscreen), (xscreen /2 - 15, yscreen - 10), (xscreen /2 - 5, yscreen - 10)))
     if setting == "avatarhouse":
         screen.fill (Time)
-        bed = pygame.image.load ("Bed.png")
+        bed = pygame.image.load("Bed.png")
         screen.blit (bed, (300, 400))
         arrownohome = pygame.draw.polygon (screen, White, (
             (xscreen /2 - 5, yscreen - 30), (xscreen /2 + 5, yscreen - 30), (xscreen /2 + 5, yscreen - 10), (xscreen /2 + 15, yscreen - 10),
@@ -202,20 +185,20 @@ def makeground():
     if setting == "Job":
         screen.fill(Time)
         magic = pygame.image.load("houseblue.png")
-        screen.blit(magic, (ball_x, ball_y))
-        coin = pygame.image.load ("houseblue.png")
+        if space_press == 1:
+            screen.blit(magic, (ball_x, ball_y))
+        coin = pygame.image.load("houseblue.png")
         screen.blit(coin, (coin_posx, coin_posy))
         weapon = pygame.image.load ("houseblue.png")
         screen.blit(weapon, (weaponx, weapony))
+        screen.blit(font.render("Lives " + str(lives / yspeed), True, (255, 255, 0)), (xscreen - 100, yscreen - 50))
     if setting != "Job":
         map_icon = pygame.draw.rect(screen, White, (xscreen-65, 10, 50, 50))
         backpack_icon = pygame.draw.rect(screen, White, (xscreen-125, 10, 50, 50))
         options_icon = pygame.draw.rect(screen, White, (xscreen-185, 10, 50, 50))
         civilization_icon = pygame.draw.rect(screen, White, (xscreen-245, 10, 50, 50))
-
 def Job():
-    global money, marketplace, setting, yspeed, weapony, weaponx, coin_posx, coin_posy, reveal_coin, reveal_weapon, ball_y, ball_x, lives
-    print(" Blacksmith,")
+    global money, marketplace, setting, yspeed, weapony, weaponx, coin_posx, coin_posy, reveal_coin, reveal_weapon, ball_y, ball_x, lives, space_press, magic
     if reveal_coin == 1:
         coin_posx = random.randrange(0, yscreen)
         coin_posy = -30
@@ -224,20 +207,25 @@ def Job():
         weapony = -30
     reveal_weapon = 0
     reveal_coin = 0
-    if coin_posy > yscreen or (ball_y == coin_posy and ball_x == coin_posy):
+    if coin_posy > yscreen or (weapony + 20 > ball_y > weapony - 20 and weaponx + 20 > ball_x > weaponx - 20):
         reveal_coin = 1
-    if weapony > yscreen or (ball_y == weapony and ball_x == weaponx):
+    if weapony > yscreen or (weapony + 20 > ball_y > weapony - 20 and weaponx + 20 > ball_x > weaponx - 20):
         reveal_weapon = 1
     if xposition == coin_posx and yposition == coin_posy and reveal_coin == 0:
         money = money + 10
-    if xposition == weaponx and yposition == weapony and reveal_weapon == 0:
+    if weapony + 20 > yposition > weapony - 20 and weaponx + 20 > xposition > weaponx - 20 and reveal_weapon == 0:
         lives = lives - 1
+    if weapony + 20 > ball_y > weapony - 20 and weaponx + 20 > ball_x > weaponx - 20:
+        space_press = 0
     if lives <= 0:
         setting = "marketplace"
+
     makeground()
+    Arrows()
 
 def click():
-    global setting, boughthouse, money, xscreen, yscreen, Inventory, InventoryAmount, oldsetting, war, civ_bank, limit_magic, art_piece, avatar_list, mainavatar, reveal_coin, reveal_weapon, lives
+    global setting, boughthouse, money, xscreen, yscreen, Inventory, InventoryAmount, oldsetting, war, civ_bank, \
+        limit_magic, art_piece, avatar_list, mainavatar, reveal_coin, reveal_weapon, lives, Enemy, militarypower, EnemyHealth, YourHealth, YourAttack, EnemyAttack
     if setting == "residential":
         if xscreen * 3 / 6 + 75> pos[0] > xscreen * 3 / 6 - 75 and 280 > pos[1] > 100:
             house = 1200
@@ -274,6 +262,17 @@ def click():
             militarypower = militarypower + 1
         if 110 + 50 > pos[0] > 110 and 110 + 50 > pos[1] > 110:
             war = "Declared"
+            Enemies = ["Ottoman Empire", "China", "West Europe", "Byzantines", "Incas"]
+            Enemy = random.choice(Enemies)
+            EnemyPower = random.randint (1, 100)
+            EnemyHealth = 1000 + EnemyPower
+            YourAdvantage = militarypower - EnemyPower
+            YourHealth = 1000 + YourAdvantage
+            EnemyAttack = 100 + EnemyPower
+            YourAttack = 100 + YourAdvantage
+            War()
+            makeground()
+        if war == "In progress":
             War()
     if setting == "avatarhouse":
         makeground ()
@@ -318,7 +317,7 @@ def click():
                 reveal_coin = 0
                 reveal_weapon = 1
                 limit_magic = 3
-                lives = 3
+                lives = 5 * yspeed
                 makeground()
                 Job()
         else:
@@ -330,27 +329,16 @@ def click():
                     "Death is a solution to all problems. No man - no problem. Are you a problem?",
                     True, (255, 0, 0)), (0, 300))
             if quotes == 3:
-                screen.blit (font.render (
+                screen.blit(font.render (
                     "Communism is not love. Communism is a hammer which we  use to crush the enemy.- Mao Zedong. Take a hammer",
                     True, (255, 0, 0)), (0, 300))
                 Inventory.append("hammer")
             if pos[0] < xscreen - 30:
                 setting = "residential"
                 makeground()
-
-    if setting == "Job":
-        print("hmm...")
-        unemployment = random.randint(1, 10)
-        if unemployment != 1 or govtype != "anarchy" or govtype != "communism":
-            makeground()
-            Job()
-        else:
-            screen.blit (font.render ("Oh no, you can't work.", True, (255, 0, 0)), (200, 300))
-
-
     if setting != "Job":
         if xscreen - 65 + 50 > pos[0] > xscreen - 65 and 60 > pos [1] > 10 or xscreen - 125 + 50 > pos[0] > \
-                xscreen - 125 and 60 > pos[1] > 10 or xscreen - 185 + 50 > pos[0] > xscreen - 185 and 60 > pos[1] > 10\
+                xscreen - 125 and 60 > pos[1] > 10 or xscreen - 185 + 50 > pos[0] > xscreen - 185 and 60 > pos[1] > 10 \
                 or xscreen - 245 + 50 > pos[0] > xscreen - 245 and 60 > pos[1] > 10:
             setting = "weird"
             pygame.draw.rect(screen, White, (100, 100, xscreen - 200, yscreen - 300))
@@ -365,9 +353,9 @@ def click():
             screen.blit(font.render("Government Body", True, (50, 255, 100)), (xscreen / 2 - 300, yscreen / 2 - 200))
         if xscreen - 125 + 50 > pos[0] > xscreen - 125 and 60 > pos[1] > 10:
             screen.blit(font.render("Inventory", True, (255, 0, 0)), (400, 100))
-            screen.blit(font.render(" Item amount: " + str (InventoryAmount) +
-                                      " Silver Coins: " + str (money), True, (255, 45, 0)), (200, 300))
-            screen.blit(font.render("Arts Bought: " + str (art_piece), True, (255, 45, 0)), (200, 350))
+            screen.blit(font.render(" Item amount: " + str(InventoryAmount) +
+                                    " Silver Coins: " + str(money), True, (255, 45, 0)), (200, 300))
+            screen.blit(font.render("Arts Bought: " + str(art_piece), True, (255, 45, 0)), (200, 350))
             invpos = 350
             for x in Inventory:
                 print(x)
@@ -376,9 +364,10 @@ def click():
         if xscreen - 245 + 50 > pos[0] > xscreen - 245 and 60 > pos[1] > 10:
             screen.blit(font.render("Civilization Status", True, (255, 0, 0)), (200, 100))
             screen.blit(font.render("In war: " + str(war) + " Wars won: " + str(warswon) + " Wars lost: " + str(warslost), True, (255, 0, 0)), (300, 300))
+            screen.blit(font.render("Enemy: " + str(Enemy) + " Government: " + govtype, True, (255, 0, 0)), (300, 370))
 
         if xscreen - 245 + 50 > pos[0] > xscreen - 245 and 60 > pos[1] > 10:
-            print("options")
+            print("Options")
         if 110 + 30 > pos[0] > 110 and 110 + 30 > pos[1] > 110:
             setting = oldsetting
             makeground ()
@@ -387,6 +376,12 @@ makeground ()
 
 while working == True:
     pygame.display.update ()
+    if setting == "Job":
+        weapony = weapony + yspeed
+        coin_posy = coin_posy + yspeed
+        if limit_magic > 0 and ball_y >= 1 or (ball_y != weapony and ball_x != weaponx):
+            ball_y = ball_y - 10
+            Job()
     for event in pygame.event.get ():
         if event.type == QUIT:
             working = False
@@ -396,12 +391,8 @@ while working == True:
         if event.type == pygame.MOUSEBUTTONDOWN:
             pos = pygame.mouse.get_pos ()
             click()
-        if setting == "Job":
-            weapony = weapony + yspeed
-            coin_posy = coin_posy + yspeed
-            if limit_magic > 0 and ball_y >= 1 or (ball_y != weapony and ball_x != weaponx):
-                ball_y = ball_y + 10
-            Job()
+
 
 #https://openclipart.org/detail/29102/blue-sofa
+
 
