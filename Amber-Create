@@ -23,19 +23,20 @@ InventoryAmount = len(Inventory)
 money = 100  # start currency
 civ_bank = 100000000000
 population = 30
-yspeed = 6
+yspeed = 7
 space_press = 0
 populationhealth = 100
 boughthouse = 0  # 0 will mean false, 1 means true
 pos = (-1, -2)
 spritework=0
-mainavatar = pygame.image.load ("Vanilla Cupcake.png")
+mainavatar = pygame.image.load ("blueman.png")
 war = "Not in War"
 warswon = 0
 warslost = 0
 art_piece = 0
-avatars_list = ("Vanilla Cupcake.png", "Chocolate Cupcake.png", "Chest.png", "HouseIcon.png", "Bed.png")
 cost = 0
+level = 0
+avatars_list = ("Vanilla Cupcake.png", "Chocolate Cupcake.png", "Chest.png", "HouseIcon.png", "Bed.png", "blueman.png")
 coin_posx = random.randrange(0, yscreen)
 coin_posy = -30
 weaponx = random.randrange(0, yscreen)
@@ -60,8 +61,10 @@ def Arrows():
         xposition=xposition+10
     if pressed[pygame.K_LEFT]:
         xposition=xposition-10
+    print(xposition) #200 off
+    print (yposition)
     makeground()
-    screen.blit(mainavatar, (xposition, yposition))
+    screen.blit(mainavatar, (xposition + 150, yposition + 40))
     if pressed[pygame.K_SPACE]:
         ball_x = xposition
         ball_y = yposition
@@ -84,7 +87,7 @@ def War():
         war = "Won"
 
 def makeground():
-    global setting, xscreen, oldsetting, font, govtype, magic, lives
+    global setting, xscreen, oldsetting, font, govtype, magic, lives, level, militarypower
     font = pygame.font.SysFont ('Arial',
                                 25)  # https://stackoverflow.com/questions/19117062/how-to-add-text-into-a-pygame-rectangle
     if setting == "residential":
@@ -130,6 +133,9 @@ def makeground():
             (xscreen - 30, yscreen / 2 - 5), (xscreen - 30, yscreen / 2 + 5), (xscreen - 10, yscreen / 2 + 5),
             (xscreen - 10, yscreen / 2 + 15), (xscreen, yscreen / 2), (xscreen - 10, yscreen / 2 - 15), (xscreen - 10,
                                                                                                          yscreen / 2 - 5)))  # https://stackoverflow.com/questions/14897071/drawing-an-arrow-in-pygame
+        militinc = pygame.draw.rect (screen, Red, (110, 400, 120, 50))
+        screen.blit(font.render ("Military Power", True, White), (110, 400))
+        screen.blit(font.render ("Military Power: " + str(militarypower), True, White), (110, 450))
         Initwar = pygame.draw.rect (screen, Red, (110, 110, 120, 50))
         screen.blit(font.render("Declare War", True, White), (110, 110))
         if war == "In progress":
@@ -187,32 +193,35 @@ def makeground():
         magic = pygame.image.load("houseblue.png")
         if space_press == 1:
             screen.blit(magic, (ball_x, ball_y))
-        coin = pygame.image.load("houseblue.png")
+        coin = pygame.image.load("Coin.png")
         screen.blit(coin, (coin_posx, coin_posy))
         weapon = pygame.image.load ("houseblue.png")
         screen.blit(weapon, (weaponx, weapony))
-        screen.blit(font.render("Lives " + str(lives / yspeed), True, (255, 255, 0)), (xscreen - 100, yscreen - 50))
+        screen.blit(font.render(" Level " + str(level) + " Money " + str(money) + " Lives " + str(lives / yspeed), True,(255, 255, 0)), (xscreen - 500, yscreen - 50))
     if setting != "Job":
         map_icon = pygame.draw.rect(screen, White, (xscreen-65, 10, 50, 50))
         backpack_icon = pygame.draw.rect(screen, White, (xscreen-125, 10, 50, 50))
         options_icon = pygame.draw.rect(screen, White, (xscreen-185, 10, 50, 50))
         civilization_icon = pygame.draw.rect(screen, White, (xscreen-245, 10, 50, 50))
 def Job():
-    global money, marketplace, setting, yspeed, weapony, weaponx, coin_posx, coin_posy, reveal_coin, reveal_weapon, ball_y, ball_x, lives, space_press, magic
+    global money, marketplace, setting, yspeed, weapony, weaponx, coin_posx, coin_posy, reveal_coin, reveal_weapon, ball_y, ball_x, lives, space_press, magic, level
     if reveal_coin == 1:
         coin_posx = random.randrange(0, yscreen)
-        coin_posy = -30
+        coin_posy = random.randrange(30, 500) * -1
     if reveal_weapon == 1:
         weaponx = random.randrange(0, yscreen)
-        weapony = -30
+        weapony = random.randrange(30, 100) * -1
     reveal_weapon = 0
     reveal_coin = 0
-    if coin_posy > yscreen or (weapony + 20 > ball_y > weapony - 20 and weaponx + 20 > ball_x > weaponx - 20):
+    if coin_posy > yscreen or (coin_posy + 45 > yposition > coin_posy - 15 and coin_posx - 120 > xposition > coin_posx - 180): #coin pos is 30 y off and 30x off
         reveal_coin = 1
     if weapony > yscreen or (weapony + 20 > ball_y > weapony - 20 and weaponx + 20 > ball_x > weaponx - 20):
         reveal_weapon = 1
-    if xposition == coin_posx and yposition == coin_posy and reveal_coin == 0:
-        money = money + 10
+    if weapony + 20 > ball_y > weapony - 20 and weaponx + 20 > ball_x > weaponx - 20:
+        money = money + level
+        level = level + 1
+    if coin_posy + 45 > yposition > coin_posy - 45 and coin_posx - 120 > xposition > coin_posx - 180:
+        money = money + 30
     if weapony + 20 > yposition > weapony - 20 and weaponx + 20 > xposition > weaponx - 20 and reveal_weapon == 0:
         lives = lives - 1
     if weapony + 20 > ball_y > weapony - 20 and weaponx + 20 > ball_x > weaponx - 20:
@@ -225,7 +234,8 @@ def Job():
 
 def click():
     global setting, boughthouse, money, xscreen, yscreen, Inventory, InventoryAmount, oldsetting, war, civ_bank, \
-        limit_magic, art_piece, avatar_list, mainavatar, reveal_coin, reveal_weapon, lives, Enemy, militarypower, EnemyHealth, YourHealth, YourAttack, EnemyAttack
+        limit_magic, art_piece, avatar_list, mainavatar, reveal_coin, reveal_weapon, lives, Enemy, militarypower, \
+        EnemyHealth, YourHealth, YourAttack, EnemyAttack, cost
     if setting == "residential":
         if xscreen * 3 / 6 + 75> pos[0] > xscreen * 3 / 6 - 75 and 280 > pos[1] > 100:
             house = 1200
@@ -256,8 +266,8 @@ def click():
         if xscreen > pos[0] > xscreen - 30 and yscreen / 2 + 15 > pos[1] > yscreen / 2 - 15:
             setting = "residential"
             makeground()
-        while civ_bank>10000 and 110 + 50 > pos[0] > 110 and 400 + 50 > pos[1] > 400 and militarypower<100:
-            cost = 10000
+        if civ_bank > cost and 110 + 100 > pos[0] > 110 and 400 + 50 > pos[1] > 400 and militarypower<100:
+            cost = 10000 * militarypower
             civ_bank = civ_bank - cost
             militarypower = militarypower + 1
         if 110 + 50 > pos[0] > 110 and 110 + 50 > pos[1] > 110:
@@ -266,10 +276,9 @@ def click():
             Enemy = random.choice(Enemies)
             EnemyPower = random.randint (1, 100)
             EnemyHealth = 1000 + EnemyPower
-            YourAdvantage = militarypower - EnemyPower
-            YourHealth = 1000 + YourAdvantage
+            YourHealth = 1000 + militarypower
             EnemyAttack = 100 + EnemyPower
-            YourAttack = 100 + YourAdvantage
+            YourAttack = 100 + militarypower
             War()
             makeground()
         if war == "In progress":
@@ -280,7 +289,7 @@ def click():
             setting = "residential"
             makeground ()
     if setting == "marketplace":
-        if govtype != "communism":
+        if govtype != "Communism":
             clothesprice = 30
             localprice = 50
             furnitureprice = 200
@@ -394,5 +403,4 @@ while working == True:
 
 
 #https://openclipart.org/detail/29102/blue-sofa
-
 
