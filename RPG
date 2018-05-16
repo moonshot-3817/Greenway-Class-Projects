@@ -1,0 +1,30 @@
+from tkinter import *
+from PIL import Image
+main = Tk()
+main.title("Drawing Images")
+screen_sizex = 800
+screen_sizey = 800
+maincanvas = Canvas(main, bg="white", height=screen_sizex, width=screen_sizey)
+maincanvas.place(x=0, y=0)
+google = PhotoImage(file="Vanilla Cupcake.png", width=screen_sizex, height=screen_sizey)
+boogle = maincanvas.create_image (screen_sizex/2, screen_sizey/2, image=google)
+def file():
+    print("Learn how to upload files")
+def image_one():
+    maincanvas.create_image (screen_sizex/2, screen_sizey/2, image=google)
+Choose_File = Button(main, fg="Red", bg="Green", text="Choose File", command = file)
+
+first_image = Button(main, fg="Red", bg="Green", text="Image Example", )
+first_image.place(x=0, y=0)
+main.mainloop()
+
+im = Image.open('Vanilla Cupcake.png', 'r')
+width, height = im.size
+pixel_values = list(im.getdata())
+pixel_len = len(pixel_values)
+print(pixel_values)
+print(pixel_len)
+
+
+
+ #Purose: Figue out RPG values of entire image and the RPG values different from surrounding image get a black line, the rest get a white pixel. Thus making an image of the face in drawing and black and white
