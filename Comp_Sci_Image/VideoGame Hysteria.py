@@ -20,7 +20,7 @@ setting = "residential"
 boughthouse = 0
 Inventory = []
 InventoryAmount = len(Inventory)
-money = 100  # start currency
+money = 1000  # start currency
 civ_bank = 100000000000
 population = 30
 yspeed = 7
@@ -42,7 +42,7 @@ coin_posy = -30
 weaponx = random.randrange(0, yscreen)
 weapony = -30
 limit_magic = 5
-militarypower = 0
+militarypower = 1
 ball_x = 0
 ball_y = 0
 govs = ["Oligarchy", "Republic", "Monarchy", "Democracy", "Dictatorship", "Communism", "Anarchy", "Theocracy"]
@@ -74,17 +74,20 @@ spriteposx=50
 spriteposy=60
 
 def War():
-    global warslost, warswon, militarypower, war, EnemyHealth, YourAttack, YourHealth, EnemyAttack
+    global warslost, warswon, militarypower, war, EnemyHealth, YourAttack, YourHealth, EnemyAttack, civ_bank
     if 400 + 100 > pos[0] > 100 and 400 + 100 > pos[1] > 100:
         war = "In progress"
+        screen.blit(font.render ("Enemy: " + str (EnemyHealth), True, White), (400, 500))
+        screen.blit(font.render ("You: " + str (YourHealth), True, White), (400, 450))
     EnemyHealth = EnemyHealth - YourAttack
     YourHealth = YourHealth - EnemyAttack
     if YourHealth <= 0 and EnemyHealth >= 0:
         warslost = warslost + 1
         war = "Lost"
-    if YourHealth >= 0 and EnemyHealth <= 0:
+    elif YourHealth >= 0 and EnemyHealth <= 0:
         warswon = warswon + 1
         war = "Won"
+        civ_bank = civ_bank + 10000
 
 def makeground():
     global setting, xscreen, oldsetting, font, govtype, magic, lives, level, militarypower
@@ -102,24 +105,6 @@ def makeground():
         screen.blit (House4, (xscreen * 4 / 6 - 200, 60))
         AvatarHouse = pygame.image.load ("houseblue.png")
         screen.blit (AvatarHouse, (xscreen * 3 / 6 - 200, 60))
-        """""""""
-        Villager1 = pygame.image.load ("Blue.png")
-        screen.blit (Villager1, (50, 200))
-        Villager2 = pygame.image.load ("HouseIcon.png")
-        screen.blit (Villager2, (50, 400))
-        Villager3 = pygame.image.load ("HouseIcon.png")
-        screen.blit (Villager3, (50, 300))
-        Villager4 = pygame.image.load ("HouseIcon.png")
-        screen.blit (Villager4, (50, 600))
-        Villager5 = pygame.image.load ("HouseIcon.png")
-        screen.blit (Villager5, (50, 200))
-        Villager6 = pygame.image.load ("HouseIcon.png")
-        screen.blit (Villager6, (50, 300))
-        Villager7 = pygame.image.load ("HouseIcon.png")
-        screen.blit (Villager7, (50, 260))
-        Villager8 = pygame.image.load ("HouseIcon.png")
-        screen.blit (Villager8, (50, 630))
-        """
         arrowtomarket = pygame.draw.polygon (screen, White, (
             (xscreen - 30, yscreen / 2 - 5), (xscreen - 30, yscreen / 2 + 5), (xscreen - 10, yscreen / 2 + 5),
             (xscreen - 10, yscreen / 2 + 15), (xscreen, yscreen / 2), (xscreen - 10, yscreen / 2 - 15), (xscreen - 10,
@@ -133,13 +118,15 @@ def makeground():
             (xscreen - 30, yscreen / 2 - 5), (xscreen - 30, yscreen / 2 + 5), (xscreen - 10, yscreen / 2 + 5),
             (xscreen - 10, yscreen / 2 + 15), (xscreen, yscreen / 2), (xscreen - 10, yscreen / 2 - 15), (xscreen - 10,
                                                                                                          yscreen / 2 - 5)))  # https://stackoverflow.com/questions/14897071/drawing-an-arrow-in-pygame
-        militinc = pygame.draw.rect (screen, Red, (110, 400, 120, 50))
         screen.blit(font.render ("Military Power", True, White), (110, 400))
         screen.blit(font.render ("Military Power: " + str(militarypower), True, White), (110, 450))
-        Initwar = pygame.draw.rect (screen, Red, (110, 110, 120, 50))
         screen.blit(font.render("Declare War", True, White), (110, 110))
         if war == "In progress":
-            Attack = pygame.draw.rect(screen, (0, 50, 100), (400, 300, 400, 400))
+            chest = pygame.image.load ("Chest.png")
+            screen.blit(chest, (20, yscreen - 300))
+            screen.blit(chest, (200, yscreen - 300))
+            screen.blit(chest, (300, yscreen - 300))
+            screen.blit(chest, (400, yscreen - 300))
             screen.blit(font.render("Attack", True, White), (400, 400))
     if setting == "marketplace":
         if govtype != "communism":
@@ -274,11 +261,11 @@ def click():
             war = "Declared"
             Enemies = ["Ottoman Empire", "China", "West Europe", "Byzantines", "Incas"]
             Enemy = random.choice(Enemies)
-            EnemyPower = random.randint (1, 100)
+            EnemyPower = random.randint(1, 100)
             EnemyHealth = 1000 + EnemyPower
             YourHealth = 1000 + militarypower
-            EnemyAttack = 100 + EnemyPower
-            YourAttack = 100 + militarypower
+            EnemyAttack = 100+ random.randint(1, 30)
+            YourAttack = 100 + random.randint(1, 30)
             War()
             makeground()
         if war == "In progress":
@@ -326,7 +313,7 @@ def click():
                 reveal_coin = 0
                 reveal_weapon = 1
                 limit_magic = 3
-                lives = 5 * yspeed
+                lives = 1 * yspeed
                 makeground()
                 Job()
         else:
@@ -390,7 +377,7 @@ while working == True:
         coin_posy = coin_posy + yspeed
         if limit_magic > 0 and ball_y >= 1 or (ball_y != weapony and ball_x != weaponx):
             ball_y = ball_y - 10
-            Job()
+            Job ()
     for event in pygame.event.get ():
         if event.type == QUIT:
             working = False
@@ -400,7 +387,6 @@ while working == True:
         if event.type == pygame.MOUSEBUTTONDOWN:
             pos = pygame.mouse.get_pos ()
             click()
-
 
 #https://openclipart.org/detail/29102/blue-sofa
 
