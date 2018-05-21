@@ -49,3 +49,57 @@ main.mainloop()
 
 
  #Purose: Figue out RPG values of entire image and the RPG values different from surrounding image get a black line, the rest get a white pixel.
+from tkinter import *
+from PIL import Image
+import PIL
+import random
+import numpy
+main = Tk()
+main.title("Drawing Images")
+screen_sizex = 1000
+screen_sizey = 1000
+work = True
+main.geometry("2000x1000")
+maincanvas = Canvas(main, bg="white", height=screen_sizex, width=screen_sizey)
+maincanvas.place(x=0, y=0)
+google = PhotoImage(file="Vanilla Cupcake.png", width=screen_sizex, height=screen_sizey)
+boogle = maincanvas.create_image(screen_sizex/2, screen_sizey/2, image=google)
+def file():
+    print("Learn how to upload files")
+
+
+def image_one():
+    examps = maincanvas.create_image(random.randint(300, screen_sizex), random.randint(300, screen_sizex), image=google)
+    print("Learn how to upload files")
+
+def yellow():
+    # Convert Image to array
+    img = Image.open("Vanilla Cupcake.png")
+    help = img.getdata()
+    arr = numpy.array(img)
+    print(help)
+
+    for i in enumerate(help):
+        if help[i] == (255, 255, 255, 0):
+            help[i].remove([255, 255, 255, 0])
+            help[i].append([0, 0, 0, 0])
+    '''''
+    a = numpy.array(help.tolist())#convert list to array https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.tolist.html
+    # Convert array to Image
+    img = PIL.Image.fromarray(arr)
+    '''''
+"""""""""
+img = Image.new(pixel_values, im.size)
+img.load()
+img.show()
+"""""""""""
+
+first_image = Button(main, fg="Red", bg="Green", text="Image Example", command=yellow)
+first_image.place(x=0, y=0)
+
+
+main.mainloop()
+
+
+
+#Purose: Figue out RPG values of entire image and the RPG values different from surrounding image get a black line, the rest get a white pixel.
