@@ -1,0 +1,155 @@
+from tkinter import *
+from PIL import Image
+import random
+from numpy import array
+main = Tk()
+main.title("Drawing Images")
+screen_sizex = 1000
+screen_sizey = 1000
+work = True
+main.geometry("2000x1000")
+maincanvas = Canvas(main, bg="white", height=screen_sizex, width=screen_sizey)
+maincanvas.place(x=0, y=0)
+google = PhotoImage(file="Vanilla Cupcake.png", width=screen_sizex, height=screen_sizey)
+boogle = maincanvas.create_image(screen_sizex/2, screen_sizey/2, image=google)
+userchoice = Image.open("Vanilla Cupcake.png")
+
+def file():
+    global v, fileentry
+    v = StringVar()
+    fileentry = Entry(maincanvas, textvariable=v, bd=5)
+    fileentry.place(x=20, y=30)
+    v.set("Vanilla Cupcake.png")
+
+def enter(event=None):
+    global google, v, fileentry
+    dog = v.get()
+    userchoice = Image.open(str(dog))
+    userchoice.show()
+    fileentry.place_forget()
+
+def file_values():
+    global userchoice
+    width, height = userchoice.size
+    print("Width and Height are" + str(width) + " , " + str(height))
+
+def file_options():
+    global userchoice
+    #examps = maincanvas.create_image(random.randint(300, screen_sizex), random.randint(300, screen_sizex), image=google)
+    "Size:"
+    #userchoice.resize(100, 100)
+    "Rotation:"
+    userchoice.rotate(60)
+    "Crop:"
+    userchoice.crop((5, 105, 5, 50))
+    "Red Color(# between 1-250)"
+    "Green Color(# between 1-250)"
+    "Blue Color(# between 1-250)"
+    "Pixels to "
+    userchoice.show()
+
+def draw(event):
+    x1, y1 = (event.x - 10), (event.y - 10)
+    x2, y2 = (event.x + 10), (event.y + 10)
+    maincanvas.create_oval(x1, y1, x2, y2, fill="dodgerblue", outline='')
+
+def Erase():
+    maincanvas.create_oval(-10000, -10000, 10000, 10000, fill="white", outline='')
+
+def drawimage(event):
+    x1, y1 = (event.x - 10), (event.y - 10)
+    maincanvas.create_image(x1, y1, image=google)
+
+#def drawgame():
+
+def image_one():
+    im = Image.open('Underwater1.jpg', 'r')
+    #rbg_im = im.convert('RGB')
+    pixel_values = list(im.getdata())
+    pixel_len = len(pixel_values)
+    width, height = im.size
+    pixelstuff = 0
+
+
+    pixel_values = list(im.getdata())
+    pixel_len = len(pixel_values)
+    print(pixel_len)
+    """""""""
+    for i in pixel_values:
+        pixelstuff = pixelstuff + pixel_values[i]
+    pixelstuff = pixelstuff / pixel_len
+    """""
+    for n, i in enumerate(pixel_values):
+        if i == (4, 100, 112):
+            pixel_values[n] = (0, 250, 0)
+
+    img_out = Image.new(im.mode, im.size)
+    print(pixel_values)
+    img_out.putdata(pixel_values)
+    img_out.show()
+
+
+"""""""""
+h = 1
+listss = []
+w = 1
+while h < height:
+    while w < width:
+        r, g, b = rbg_im.getpixel((w, h))
+        if r == 0:
+        print(r, g, b)
+        listss.append((r, g, b))
+        w = w + 1
+    h = h + 1
+
+width, height = im.size
+pixel_values = list(im.getdata())
+pixel_len = len(pixel_values)
+print(pixel_values)
+print(pixel_len)
+
+for i in range(pixel_len):
+    if not pixel_values[i] == (255, 255, 255, 0):
+        pixel_values[i] = (0, 0, 0, 0)
+print(pixel_values)
+
+img = Image.new(pixel_values, im.size)
+img.load()
+img.show()
+"""""""""""
+menubar = Menu(main)
+filemenu = Menu(menubar, tearoff=0)
+filemenu.add_command(label="Image Example", command=image_one)
+filemenu.add_command(label="Choose an image file", command=file)
+filemenu.add_command(label="File Values", command=file_values)
+filemenu.add_separator()
+filemenu.add_command(label="Exit", command=main.quit)
+menubar.add_cascade(label="File", menu=filemenu)
+
+optionmenu = Menu(menubar, tearoff=0)
+optionmenu.add_command(label="Crop", command=file_options)
+optionmenu.add_command(label="Resize", command=file_options)
+optionmenu.add_command(label="Rotation", command=file_options)
+optionmenu.add_command(label="Add Text", command=file_options)
+optionmenu.add_separator()
+optionmenu.add_command(label="Exit", command=main.quit)
+menubar.add_cascade(label="File Options", menu=optionmenu)
+
+drawmenu = Menu(menubar, tearoff=0)
+drawmenu.add_command(label="Erase", command=Erase)
+#drawmenu.add_command(label="Draw image", command=drawimage)
+drawmenu.add_separator()
+drawmenu.add_command(label="Exit", command=main.quit)
+menubar.add_cascade(label="Draw", menu=drawmenu)
+
+
+main.bind('<Return>', enter)
+main.config(menu=menubar)
+maincanvas.bind("<B1-Motion>", draw, drawimage)
+main.mainloop()
+
+
+
+
+#https://stackoverflow.com/questions/47475783/how-to-bind-enter-key-to-a-tkinter-button?rq=1
+ #Purose: Figue out RPG values of entire image and the RPG values different from surrounding image get a black line, the rest get a white pixel. Thus making an image of the face in drawing and black and white
